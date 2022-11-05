@@ -2,6 +2,27 @@
   text-align: center;
 }
 
+.AppBar {
+  background-color: black;
+}
+
+html,body {
+	margin:0;
+	padding:0;
+	height:100%; /* needed for container min-height */
+}
+
+.Profile {
+  position: relative; /* needed for footer positioning*/
+  margin: 2%;
+  height: 100%;
+  height: auto !important; /* real browsers */
+  min-height: 100%; /* real browsers */
+}
+
+.Posts {
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
