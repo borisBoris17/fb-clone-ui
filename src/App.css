@@ -14,13 +14,31 @@ html,body {
 
 .Profile {
   position: relative; /* needed for footer positioning*/
-  margin: 2%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  padding: 2%;
   height: 100%;
   height: auto !important; /* real browsers */
   min-height: 100%; /* real browsers */
 }
 
-.Posts {
+.Author {
+  margin-top: 1%;
+}
+
+.AddComment {
+  margin-bottom: 2%;
+}
+
+.Reply {
+  margin: 2%;
+  margin-left: 5%;
+}
+
+.buttonDiv {
+  margin: 2%;
+  border-top: #121212 solid 1pt;
+  border-bottom: #121212 solid 1pt;
 }
 
 .App-logo {

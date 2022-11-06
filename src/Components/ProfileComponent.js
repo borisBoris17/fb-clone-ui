@@ -25,7 +25,7 @@ function ProfileComponent(props) {
         <Grid item lg={8}>
           <Card className="Posts" sx={{
             width: "100%",
-            padding: "2%",
+            padding: "0%",
             margin: "0%",
           }}>
             {posts.map(post => <PostComponent profileData={profileData} post={post} />)}

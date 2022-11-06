@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import config from '../config';
-import { Grid, Box, Typography, Button } from '@mui/material'
+import { Grid, Box, Typography, Button } from '@mui/material';
+import AuthorComponent from './AuthorComponent';
 
 const ReplyComponent = (props) => {
   const [profileData, setProfileData] = useState({});
@@ -22,28 +23,14 @@ const ReplyComponent = (props) => {
     <div className='Reply'>
       {profileData.content !== undefined ?
       <Box>
-      <Grid container spacing={2}>
-        <Grid item justifyContent="flex-start" lg={1}>
-          <Box
-            component="img"
-            sx={{
-              height: 40,
-              width: 40,
-              borderRadius: 40 / 2,
-            }}
-            src={`${config.api.protocol}://${config.api.host}/images/${profileData.content.profileImageName}`}
-          />
-        </Grid>
-        <Grid item lg={10}>
-          <Typography
-            sx={{
-              textAlign: "left"
-            }}>{profileData.content !== undefined ? profileData.content.name : ""}</Typography>
-        </Grid>
-      </Grid> 
+      <AuthorComponent profileData={profileData}/>
       <Typography
             sx={{
-              textAlign: "left"
+              textAlign: "left",
+              margin: '2%',
+              padding: '1%',
+              background: '#121212',
+              borderRadius: '15pt'
             }}>{props.reply.content !== undefined ? props.reply.content.text : ""}</Typography>
             <Grid container spacing={1}>
             <Grid item justifyContent="flex-start" lg={2}>
