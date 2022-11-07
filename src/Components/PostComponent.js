@@ -29,6 +29,12 @@ function PostComponent(props) {
     setShowComments(!showComments);
   }
 
+  function showCommentsIfNotShown() {
+    if (!showComments) {
+      setShowComments(!showComments);
+    } 
+  }
+
   return (
     <div className="Post">
       <AuthorComponent profileData={props.profileData} />
@@ -63,7 +69,8 @@ function PostComponent(props) {
           <Grid item justifyContent="flex-start" lg={6}>
             <Button sx={{
               width: "100%"
-            }}>Comment</Button>
+            }}
+            onClick={showCommentsIfNotShown}>Comment</Button>
           </Grid>
         </Grid>
       </div>

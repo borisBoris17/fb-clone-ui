@@ -6,7 +6,7 @@ function AddCommentComponent(props) {
 
   return (
     <div className='AddComment'>
-      <Grid container spacing={1}>
+      <Grid container>
         <Grid item justifyContent="flex-start" lg={1}>
           <Box
             component="img"
@@ -19,10 +19,9 @@ function AddCommentComponent(props) {
           />
         </Grid>
         <Grid item lg={11}>
-          <TextField sx={{
-            borderRadius: 15,
-            width: '95%',
-          }} id="outlined-basic" variant="outlined" />
+          <TextField className='commentTextField' sx={{
+            width: '98%',
+          }} id="outlined-basic" variant="outlined" placeholder="Write a comment..." size="small"/>
         </Grid>
       </Grid>
     </div>

@@ -41,9 +41,8 @@ html,body {
   border-bottom: #121212 solid 1pt;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.commentTextField fieldset {
+  border-radius: 25px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
