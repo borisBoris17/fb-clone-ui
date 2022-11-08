@@ -4,6 +4,7 @@ import config from '../config';
 import { Grid, Button, Stack, Box, Typography } from '@mui/material';
 import ReplyComponent from './ReplyComponent';
 import AuthorComponent from './AuthorComponent';
+import '../Stylesheets/Comment.css'
 
 function CommentComponent(props) {
   const [profileData, setProfileData] = useState({});
@@ -33,18 +34,10 @@ function CommentComponent(props) {
               background: '#121212',
               borderRadius: '15pt'
             }}>{props.comment.content !== undefined ? props.comment.content.text : ""}</Typography>
-            <Grid container spacing={1}>
-            <Grid item justifyContent="flex-start" lg={2}>
-              <Button varient="text" size="small" sx={{
-                width: "100%"
-              }}>Like</Button>
-            </Grid>
-            <Grid item justifyContent="flex-start" lg={2}>
-              <Button varient="text" size="small" sx={{
-                width: "100%"
-              }}>Comment</Button>
-            </Grid>
-          </Grid>
+            <div className="commentInterations">
+              <Button varient="text" size="small">Like</Button>
+              <Button varient="text" size="small" >Comment</Button>
+            </div>
           {replies.map(reply => <ReplyComponent reply={reply} />)}
         </Box> : ""}
     </div>

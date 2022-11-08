@@ -3,6 +3,7 @@ import axios from 'axios';
 import config from '../config';
 import { Grid, Box, Typography, Button } from '@mui/material';
 import AuthorComponent from './AuthorComponent';
+import '../Stylesheets/Reply.css'
 
 const ReplyComponent = (props) => {
   const [profileData, setProfileData] = useState({});
@@ -32,18 +33,10 @@ const ReplyComponent = (props) => {
               background: '#121212',
               borderRadius: '15pt'
             }}>{props.reply.content !== undefined ? props.reply.content.text : ""}</Typography>
-            <Grid container spacing={1}>
-            <Grid item justifyContent="flex-start" lg={2}>
-              <Button varient="text" size="small" sx={{
-                width: "100%"
-              }}>Like</Button>
-            </Grid>
-            <Grid item justifyContent="flex-start" lg={2}>
-              <Button varient="text" size="small" sx={{
-                width: "100%"
-              }}>Comment</Button>
-            </Grid>
-          </Grid>
+            <div className="replyInterations">
+              <Button varient="text" size="small">Like</Button>
+              <Button varient="text" size="small" >Comment</Button>
+            </div>
           {replies.map(reply => <ReplyComponent reply={reply} />)}
       </Box>: "" }
     </div>

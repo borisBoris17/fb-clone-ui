@@ -8,6 +8,7 @@ import AuthorComponent from './AuthorComponent';
 import LikeBugComponent from './LikeBugComponent';
 import CommentBugComponent from './CommentBugComponent';
 import AddCommentComponent from './AddCommentComponent';
+import '../Stylesheets/Post.css'
 
 function PostComponent(props) {
   const [comments, setComments] = useState([]);
@@ -32,7 +33,7 @@ function PostComponent(props) {
   function showCommentsIfNotShown() {
     if (!showComments) {
       setShowComments(!showComments);
-    } 
+    }
   }
 
   return (
@@ -51,31 +52,19 @@ function PostComponent(props) {
         }}
         src={`${config.api.protocol}://${config.api.host}/images/${props.profileData.content.profileImageName}`}
       />)}
-      <Grid container spacing={1}>
-        <Grid item justifyContent="flex-start" lg={10}>
-          {likes.length > 0 ? <LikeBugComponent likes={likes} /> : ''}
-        </Grid>
-        <Grid item justifyContent="flex-end" lg={2}>
-          {comments.length > 0 ? <CommentBugComponent toggleShowComments={toggleShowComments} comments={comments} /> : ''}
-        </Grid>
-      </Grid>
+      <div className="postInteractions">
+        {likes.length > 0 ? <LikeBugComponent likes={likes} /> : ''}
+        {comments.length > 0 ? <CommentBugComponent toggleShowComments={toggleShowComments} comments={comments} /> : ''}
+      </div>
       <div className='buttonDiv'>
-        <Grid container spacing={1}>
-          <Grid item justifyContent="flex-start" lg={6}>
-            <Button sx={{
-              width: "100%"
-            }}>Like</Button>
-          </Grid>
-          <Grid item justifyContent="flex-start" lg={6}>
-            <Button sx={{
-              width: "100%"
-            }}
-            onClick={showCommentsIfNotShown}>Comment</Button>
-          </Grid>
-        </Grid>
+        <Button>Like</Button>
+        <Button sx={{
+          width: "100%"
+        }}
+          onClick={showCommentsIfNotShown}>Comment</Button>
       </div>
       {showComments ? comments.map(comment => (<div><CommentComponent profileData={props.profileData} comment={comment} />
-      <AddCommentComponent profileData={props.profileData} /></div> )) : ''}
+        <AddCommentComponent profileData={props.profileData} /></div>)) : ''}
     </div>
   );
 }

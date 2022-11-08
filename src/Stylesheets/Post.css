@@ -1,0 +1,27 @@
+.postInteractions {
+  display: flex;
+  align-items: center;
+  align-content: flex-start;
+}
+
+.postLike {
+  flex: 1;
+  text-align: left;
+  margin: 10px;
+}
+
+.commentButton {
+  margin: 10px;
+}
+
+.buttonDiv {
+  display: flex;
+  align-items: center;
+  margin: 2%;
+  border-top: #121212 solid 1pt;
+  border-bottom: #121212 solid 1pt;
+}
+
+.buttonDiv > .MuiButton-root {
+  width: 50%;
+}

@@ -36,8 +36,7 @@ function ProfileComponent(props) {
             width: "100%",
             minHeight: '50vw'
           }}>
-            <span>{profileData.content !== undefined ? <img src={`${config.api.protocol}://${config.api.host}/images/${profileData.content.profileImageName}`} id="img-change" alt="testImage" width="10%" /> : ""}</span>
-            <span>{profileData.content !== undefined ? profileData.content.name : ""}</span>
+            
           </Card>
         </Grid>
       </Grid>

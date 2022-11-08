@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 
 function CommentBugComponent(props) {
   return (
-    <div>
+    <div className="commentButton">
       {props.comments.length > 0 ? <Button onClick={props.toggleShowComments}>{props.comments.length} Comments</Button> : ''}
     </div>
   )

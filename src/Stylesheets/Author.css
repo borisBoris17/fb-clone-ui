@@ -1,0 +1,9 @@
+.Author {
+  display: flex;
+  align-items: center;
+  margin-top: 1%;
+}
+
+.authorImage {
+  margin: 10px;
+}
