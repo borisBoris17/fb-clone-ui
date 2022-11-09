@@ -24,7 +24,7 @@ const ReplyComponent = (props) => {
     <div className='Reply'>
       {profileData.content !== undefined ?
       <Box>
-      <AuthorComponent profileData={profileData}/>
+      <AuthorComponent author={profileData}/>
       <Typography
             sx={{
               textAlign: "left",
