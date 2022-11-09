@@ -6,7 +6,7 @@ import '../Stylesheets/Author.css'
 function AuthorComponent({author}) {
   return (
     <div className='Author'>
-      {author.content !== undefined ? <><Avatar className='authorImage' src={`${config.api.protocol}://${config.api.host}/images/${author.content.profileImageName}`} />
+      {author !== undefined && author.content !== undefined ? <><Avatar className='authorImage' src={`${config.api.protocol}://${config.api.host}/images/${author.content.profileImageName}`} />
       <Typography
         sx={{
           textAlign: "left"

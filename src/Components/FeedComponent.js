@@ -9,7 +9,7 @@ import AddCommentComponent from './AddCommentComponent';
 
 function FeedComponent(props) {
   const [profileData, setProfileData] = useState({});
-  const [friends, setFriends] = useState([]);
+  // const [friends, setFriends] = useState([]);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -17,29 +17,11 @@ function FeedComponent(props) {
       axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${props.profileId}`).then(resp => {
         setProfileData(resp.data[0]);
       });
-      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${props.profileId}/Friend/Profile`).then(resp => {
-        setFriends(resp.data);
-      })
+      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/feed/${props.profileId}`).then(resp => {
+        setPosts(resp.data)
+      });
     }
   }, [props.profileId]);
-
-  useEffect(() => {
-    if (friends) {
-      friends.map(friend => {
-        axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${friend.node_id}/Authored/Post`).then(resp => {
-          let alreadyInPosts = false;
-          posts.map(post => {
-            if (post.node_id === resp.data[0].node_id) {
-              alreadyInPosts = true;
-            }
-          })
-          if (!alreadyInPosts) {
-            setPosts(current => [...current, resp.data[0]]);
-          }
-        });
-      })
-    }
-  }, [friends]);
 
   return (
     <div className="Feed">
@@ -50,7 +32,7 @@ function FeedComponent(props) {
               {profileData.content !== undefined ? <AddCommentComponent profileData={profileData} placeholder={`What is on your mind, ${profileData.content.name}?`} /> : ''}
             </div>
           </Card>
-          {posts.map(post =><Card className="postsCard"> <PostComponent profileData={profileData} post={post} /></Card>)}
+          {posts.map(post => <Card className="postsCard"> <PostComponent profileData={profileData} post={post} /></Card>)}
         </Grid>
         <Grid item lg={4}>
           <Card sx={{
