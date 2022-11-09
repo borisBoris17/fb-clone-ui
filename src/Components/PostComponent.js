@@ -11,6 +11,7 @@ import AddCommentComponent from './AddCommentComponent';
 import '../Stylesheets/Post.css'
 
 function PostComponent(props) {
+  const [author, setAuthor] = useState({});
   const [comments, setComments] = useState([]);
   const [likes, setLikes] = useState([]);
   const [showComments, setShowComments] = useState(true);
@@ -22,6 +23,9 @@ function PostComponent(props) {
       });
       axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/relation/${props.post.node_id}/Liked_by`).then(resp => {
         setLikes(resp.data);
+      });
+      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${props.post.node_id}/Authored_by/Profile`).then(resp => {
+        setAuthor(resp.data[0]);
       });
     }
   }, [props.post]);
@@ -38,7 +42,7 @@ function PostComponent(props) {
 
   return (
     <div className="Post">
-      <AuthorComponent profileData={props.profileData} />
+      <AuthorComponent author={author} />
       <Typography
         sx={{
           textAlign: "left",
@@ -50,7 +54,7 @@ function PostComponent(props) {
         sx={{
           width: '100%',
         }}
-        src={`${config.api.protocol}://${config.api.host}/images/${props.profileData.content.profileImageName}`}
+        src={`${config.api.protocol}://${config.api.host}/images/${image}`}
       />)}
       <div className="postInteractions">
         {likes.length > 0 ? <LikeBugComponent likes={likes} /> : ''}
@@ -64,7 +68,7 @@ function PostComponent(props) {
           onClick={showCommentsIfNotShown}>Comment</Button>
       </div>
       {showComments ? comments.map(comment => (<div><CommentComponent profileData={props.profileData} comment={comment} />
-        <AddCommentComponent profileData={props.profileData} /></div>)) : ''}
+        <AddCommentComponent profileData={props.profileData} placeholder="Write a comment..." /></div>)) : ''}
     </div>
   );
 }

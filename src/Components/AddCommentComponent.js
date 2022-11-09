@@ -21,7 +21,7 @@ function AddCommentComponent(props) {
         <Grid item lg={11}>
           <TextField className='commentTextField' sx={{
             width: '98%',
-          }} id="outlined-basic" variant="outlined" placeholder="Write a comment..." size="small"/>
+          }} id="outlined-basic" variant="outlined" placeholder={props.placeholder} size="small"/>
         </Grid>
       </Grid>
     </div>

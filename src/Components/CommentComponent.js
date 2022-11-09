@@ -25,7 +25,7 @@ function CommentComponent(props) {
     <div className="Comment">
       {profileData.content !== undefined ?
         <Box className="Comments" >
-          <AuthorComponent profileData={profileData}/>
+          <AuthorComponent author={profileData}/>
           <Typography
             sx={{
               textAlign: "left",
