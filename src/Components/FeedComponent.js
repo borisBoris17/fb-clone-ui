@@ -32,7 +32,7 @@ function FeedComponent(props) {
               {profileData.content !== undefined ? <AddCommentComponent profileData={profileData} placeholder={`What is on your mind, ${profileData.content.name}?`} /> : ''}
             </div>
           </Card>
-          {posts.map(post => <Card className="postsCard"> <PostComponent profileData={profileData} post={post} /></Card>)}
+          {posts.map(post => <Card className="postsCard" > <PostComponent profileData={profileData} post={post} /></Card>)}
         </Grid>
         <Grid item lg={4}>
           <Card sx={{
