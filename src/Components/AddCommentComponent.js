@@ -1,29 +1,43 @@
-import { React } from 'react';
-import { Grid, Box, TextField } from '@mui/material';
+import { React, useState } from 'react';
+import { Button, TextField, Avatar, Hidden } from '@mui/material';
 import config from '../config';
 
-function AddCommentComponent(props) {
+function AddCommentComponent({ profileData, placeholder, handlePostComment, buttonLabel }) {
+  const [postText, setPostText] = useState('');
+
+  const handlePostTextChange = (event) => {
+    setPostText(event.target.value);
+  }
+
+  const postComment = () => {
+    handlePostComment(postText);
+    setPostText('');
+  }
 
   return (
-    <div className='AddComment'>
-      <Grid container>
-        <Grid item justifyContent="flex-start" lg={1}>
-          <Box
-            component="img"
-            sx={{
-              height: 40,
-              width: 40,
-              borderRadius: 40 / 2,
-            }}
-            src={`${config.api.protocol}://${config.api.host}/images/${props.profileData.content.profileImageName}`}
-          />
-        </Grid>
-        <Grid item lg={11}>
-          <TextField className='commentTextField' sx={{
-            width: '98%',
-          }} id="outlined-basic" variant="outlined" placeholder={props.placeholder} size="small"/>
-        </Grid>
-      </Grid>
+    <div className='addComment'>
+      <div className='addComment__top'>
+        <Avatar
+          src={`${config.api.protocol}://${config.api.host}/images/${profileData.content.profileImageName}`}
+        />
+        <TextField
+          className='commentTextField'
+          id="outlined-basic"
+          variant="outlined"
+          placeholder={placeholder}
+          size="small"
+          value={postText}
+          onChange={handlePostTextChange}
+          autoComplete='off'
+        />
+      </div>
+      <div className="addComment__bottom">
+        <Button
+          onClick={postComment}
+        >
+          {buttonLabel}
+        </Button>
+      </div>
     </div>
   )
 }

@@ -1,9 +1,27 @@
+.feed {
+  margin-top: 1%;
+  display: flex;
+  /* align-items: center; */
+  align-content: flex-start;
+}
+
 .postsCard {
-  width: 100%;
+  flex: 1;
   padding: 0%;
-  margin-bottom: 2%;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 20px;
 }
 
 .createPost {
-  margin-top: 2%
+  margin-top: 2%;
+}
+
+.sideComponent {
+  align-content: left;
+  width: 450px;
+  min-height: 50vw;
+  margin-right: 20px;
+  margin-left: 10px;
+  margin-bottom: 20px;
 }

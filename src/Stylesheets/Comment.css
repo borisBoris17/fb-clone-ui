@@ -4,3 +4,44 @@
   align-content: flex-start;
   margin-left: 5%;
 }
+
+.addComment__top {
+  display: flex;
+  align-items: center;
+  margin: 2%;
+}
+
+.commentTextField {
+  flex: 1;
+}
+
+.commentTextField div {
+  margin-left: 2%;
+}
+
+.addComment__bottom {
+  margin-bottom: 2%;
+}
+
+.commentBlock {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  margin: 2%;
+  padding: 1%;
+  background: #121212;
+  border-radius: 15pt;
+}
+
+.commentText {
+  flex: 1;
+  padding-left: 10px;
+}
+
+.commentLikes {
+  padding-right: 10px;
+}
+
+.replies {
+  margin-left: 5%;
+}

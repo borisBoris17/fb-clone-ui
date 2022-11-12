@@ -9,7 +9,6 @@ import AddCommentComponent from './AddCommentComponent';
 
 function FeedComponent(props) {
   const [profileData, setProfileData] = useState({});
-  // const [friends, setFriends] = useState([]);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -23,26 +22,52 @@ function FeedComponent(props) {
     }
   }, [props.profileId]);
 
-  return (
-    <div className="Feed">
-      <Grid container spacing={1}>
-        <Grid item lg={8}>
-          <Card className="postsCard">
-            <div className="createPost">
-              {profileData.content !== undefined ? <AddCommentComponent profileData={profileData} placeholder={`What is on your mind, ${profileData.content.name}?`} /> : ''}
-            </div>
-          </Card>
-          {posts.map(post => <Card className="postsCard" > <PostComponent profileData={profileData} post={post} /></Card>)}
-        </Grid>
-        <Grid item lg={4}>
-          <Card sx={{
-            width: "100%",
-            minHeight: '50vw'
-          }}>
+  const handleCreateNewPost = async (postText) => {
+    const post = createPostObject(postText);
+    const savedPost = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/node/`, post);
+    const authoredRelation = createRelationObject(profileData.node_id, savedPost.data.node_id, 'Authored');
+    const authoredByRelation = createRelationObject(savedPost.data.node_id, profileData.node_id, 'Authored_by');
+    const savedAuthoredRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, authoredRelation);
+    const savedAuthoredByRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, authoredByRelation);
+    axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/feed/${props.profileId}`).then(resp => {
+      setPosts(resp.data)
+    });
+  }
 
-          </Card>
-        </Grid>
-      </Grid>
+  const createPostObject = (postText) => {
+    return {
+      node_type: "Post",
+      content: {
+        text: postText,
+        images: []
+      }
+    }
+  }
+
+  const createRelationObject = (sourceId, destId, type) => {
+    return {
+      source_id: sourceId,
+      dest_id: destId,
+      relation_type: type,
+      content: null
+    }
+  }
+
+  return (
+    <div className="feed">
+      <div>
+        <Card className="postsCard">
+          <div className="createPost">
+            {profileData.content !== undefined ? <AddCommentComponent profileData={profileData} placeholder={`What is on your mind, ${profileData.content.name}?`} buttonLabel="Post" handlePostComment={handleCreateNewPost} /> : ''}
+          </div>
+        </Card>
+        {posts.map(post => <Card className="postsCard" > <PostComponent profileData={profileData} post={post} /></Card>)}
+      </div>
+      <div>
+        <Card className="sideComponent">
+          
+        </Card>
+      </div>
     </div>
   );
 }
