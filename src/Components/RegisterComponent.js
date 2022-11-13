@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
+import { MarkEmailReadTwoTone } from '@mui/icons-material';
 const config = require('../config');
 const util = require('../Utilities/util');
 
@@ -20,33 +21,34 @@ const modalStyle = {
   p: 4,
 };
 
-function LoginComponent({setIsLoggedIn, handleCloseLogin, openLoginMenu, handleOpenRegister}) {
+function RegisterComponent({ setIsLoggedIn, handleCloseRegister, openRegisterMenu }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
 
-  const handleLogin = () => {
-    axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/account/login`, {
-      username: username, password: password
+  const handleRegister = () => {
+    axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/account/register`, {
+      username: username, password: password, email: email, name: name
     }).then(resp => {
+      axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/account/register`, {
+        username: username, password: password, email: email
+      }).then(resp => {
+
+      });
       util.addTokenToStorage(resp.data.token);
       setIsLoggedIn(true);
       setUsername('');
       setPassword('');
-      handleCloseLogin();
+      setEmail('');
+      handleCloseRegister();
     });
-  }
-
-  const handleRegister = () => {
-    setUsername('');
-    setPassword('');
-    handleCloseLogin();
-    handleOpenRegister();
   }
 
   return (
     <Modal
-      open={openLoginMenu}
-      onClose={handleCloseLogin}
+      open={openRegisterMenu}
+      onClose={handleCloseRegister}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -72,22 +74,29 @@ function LoginComponent({setIsLoggedIn, handleCloseLogin, openLoginMenu, handleO
               onChange={(event) => setPassword(event.target.value)}
               value={password} />
           </FormControl>
-          <Grid container >
-            <Grid item xs={9}>
-              <Button variant='outlined' onClick={handleLogin} >
-                Login
-              </Button>
-            </Grid>
-            <Grid item xs={3}>
-              <Button onClick={handleRegister}>
-                Register
-              </Button>
-            </Grid>
-          </Grid>
+          <FormControl fullWidth>
+            <TextField
+              label="Name"
+              id="nameInput"
+              variant="outlined"
+              onChange={(event) => setName(event.target.value)}
+              value={name} />
+          </FormControl>
+          <FormControl fullWidth>
+            <TextField
+              label="Email"
+              id="emailInput"
+              variant="outlined"
+              onChange={(event) => setEmail(event.target.value)}
+              value={email} />
+          </FormControl>
+          <Button onClick={handleRegister}>
+            Register
+          </Button>
         </Stack>
       </Box>
     </Modal>
   )
 }
 
-export default LoginComponent;
+export default RegisterComponent;

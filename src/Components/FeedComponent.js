@@ -55,7 +55,7 @@ function FeedComponent({ profileId, isLoggedIn }) {
 
   return (
     <div >
-      {isLoggedIn !== undefined ?
+      {isLoggedIn && profileData.content !== undefined  ?
         <div className="feed">
           <div>
             <Card className="postsCard">

@@ -52,12 +52,18 @@ function App() {
     }
   }, [isLoggedIn]);
 
+  const handleLogOut = () => {
+    util.logout();
+    setIsLoggedIn(false);
+    setProfileId('');
+  }
+
   return (
     <div className="App">
       <Router>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <AppBarComponent isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} title={"Memory Social"}/>
+          <AppBarComponent isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} title={"Memory Social"} handleLogOut={handleLogOut} />
           <Grid container spacing={1}>
             <Grid item lg={2}>
               <SideNavigationComponent />

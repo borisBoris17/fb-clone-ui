@@ -18,3 +18,7 @@ export const addTokenToStorage = (token) => {
 const getMillisForNumOfMinutes = (numOfMinutes) => {
   return numOfMinutes * 60 * 1000;
 }
+
+export const logout = () => {
+  localStorage.removeItem('token');
+}
