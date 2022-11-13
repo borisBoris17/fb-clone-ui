@@ -90,7 +90,8 @@ function PostComponent({post, profileData}) {
           margin: '2%',
         }}>{post.content !== undefined ? post.content.text : ""}
       </Typography>
-      {post.content.images.map(image => <Box
+      {post.content.images.map((image, index) => <Box
+        key={index}
         component="img"
         sx={{
           width: '100%',
@@ -108,7 +109,7 @@ function PostComponent({post, profileData}) {
         }}
           onClick={showCommentsIfNotShown}>Comment</Button>
       </div>
-      {showComments ? comments.map(comment => (<CommentComponent profileData={profileData} comment={comment} />)) : ''}
+      {showComments ? comments.map(comment => (<CommentComponent key={comment.node_id} profileData={profileData} comment={comment} />)) : ''}
       <AddCommentComponent profileData={profileData} placeholder="Write a comment..." buttonLabel="Comment" handlePostComment={handleCreateNewComment} />
     </div>
   );

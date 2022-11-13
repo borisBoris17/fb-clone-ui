@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { Button, TextField, Avatar, Hidden } from '@mui/material';
+import { Button, TextField, Avatar } from '@mui/material';
 import config from '../config';
 
 function AddCommentComponent({ profileData, placeholder, handlePostComment, buttonLabel }) {
