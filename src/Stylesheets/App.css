@@ -21,15 +21,6 @@ html,body {
   min-height: 100%; /* real browsers */
 }
 
-.Feed {
-  position: relative; /* needed for footer positioning*/
-  margin-top: 1%;
-  margin-bottom: 1%;
-  height: 98%;
-  height: auto !important; /* real browsers */
-  min-height: 100%; /* real browsers */
-}
-
 .AddComment {
   margin-bottom: 2%;
 }

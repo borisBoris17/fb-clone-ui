@@ -7,20 +7,20 @@ import '../Stylesheets/Feed.css';
 import AuthorComponent from './AuthorComponent';
 import AddCommentComponent from './AddCommentComponent';
 
-function FeedComponent(props) {
+function FeedComponent({ profileId, isLoggedIn }) {
   const [profileData, setProfileData] = useState({});
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    if (props.profileId) {
-      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${props.profileId}`).then(resp => {
+    if (profileId && profileId !== '') {
+      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${profileId}`).then(resp => {
         setProfileData(resp.data[0]);
       });
-      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/feed/${props.profileId}`).then(resp => {
+      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/feed/${profileId}`).then(resp => {
         setPosts(resp.data)
       });
     }
-  }, [props.profileId]);
+  }, [profileId]);
 
   const handleCreateNewPost = async (postText) => {
     const post = createPostObject(postText);
@@ -29,7 +29,7 @@ function FeedComponent(props) {
     const authoredByRelation = createRelationObject(savedPost.data.node_id, profileData.node_id, 'Authored_by');
     const savedAuthoredRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, authoredRelation);
     const savedAuthoredByRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, authoredByRelation);
-    axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/feed/${props.profileId}`).then(resp => {
+    axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/feed/${profileId}`).then(resp => {
       setPosts(resp.data)
     });
   }
@@ -54,20 +54,36 @@ function FeedComponent(props) {
   }
 
   return (
-    <div className="feed">
-      <div>
-        <Card className="postsCard">
-          <div className="createPost">
-            {profileData.content !== undefined ? <AddCommentComponent profileData={profileData} placeholder={`What is on your mind, ${profileData.content.name}?`} buttonLabel="Post" handlePostComment={handleCreateNewPost} /> : ''}
+    <div >
+      {isLoggedIn !== undefined ?
+        <div className="feed">
+          <div>
+            <Card className="postsCard">
+              <div className="createPost">
+                {profileData.content !== undefined ? <AddCommentComponent profileData={profileData} placeholder={`What is on your mind, ${profileData.content.name}?`} buttonLabel="Post" handlePostComment={handleCreateNewPost} /> : ''}
+              </div>
+            </Card>
+            {posts.map(post => <Card key={post.node_id} className="postsCard" > <PostComponent profileData={profileData} post={post} /></Card>)}
           </div>
-        </Card>
-        {posts.map(post => <Card className="postsCard" > <PostComponent profileData={profileData} post={post} /></Card>)}
-      </div>
-      <div>
-        <Card className="sideComponent">
-          
-        </Card>
-      </div>
+          <div>
+            <Card className="sideComponent">
+
+            </Card>
+          </div>
+        </div> :
+        <div className="feed">
+          <div>
+            <Card className="postsCard">
+              <div className="missingProfileMessageDiv">No profile loaded, make sure you are logged in...
+              </div>
+            </Card>
+          </div>
+          <div>
+            <Card className="sideComponent">
+
+            </Card>
+          </div>
+        </div>}
     </div>
   );
 }

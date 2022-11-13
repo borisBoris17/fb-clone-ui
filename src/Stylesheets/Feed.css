@@ -17,10 +17,15 @@
   margin-top: 2%;
 }
 
+.missingProfileMessageDiv {
+  margin: 2%;
+  width: 50vw;
+}
+
 .sideComponent {
   align-content: left;
   width: 450px;
-  min-height: 50vw;
+  min-height: 90vh;
   margin-right: 20px;
   margin-left: 10px;
   margin-bottom: 20px;

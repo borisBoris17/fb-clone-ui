@@ -85,7 +85,7 @@ function CommentComponent({ comment, profileData }) {
             <Button varient="text" size="small" onClick={() => {setShowCommentInput(!showCommentInput)}}>Reply</Button>
           </div>
           <div className='replies'>
-            {replies.map(reply => <CommentComponent profileData={profileData} comment={reply}/>)}
+            {replies.map(reply => <CommentComponent key={reply.node_id} profileData={profileData} comment={reply}/>)}
           </div>
         </div> : ""}
     </div>
