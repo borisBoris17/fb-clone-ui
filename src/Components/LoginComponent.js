@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
+import { ErrorResponse } from '@remix-run/router';
 const config = require('../config');
 const util = require('../Utilities/util');
 
@@ -23,16 +24,23 @@ const modalStyle = {
 function LoginComponent({setIsLoggedIn, handleCloseLogin, openLoginMenu, handleOpenRegister}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = () => {
     axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/account/login`, {
       username: username, password: password
     }).then(resp => {
+      setHasError(false);
+      setErrorMessage('');
       util.addTokenToStorage(resp.data.token);
       setIsLoggedIn(true);
       setUsername('');
       setPassword('');
       handleCloseLogin();
+    }).catch(resp => {
+      setHasError(true);
+      setErrorMessage(resp.response.data);
     });
   }
 
@@ -55,6 +63,7 @@ function LoginComponent({setIsLoggedIn, handleCloseLogin, openLoginMenu, handleO
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Login
           </Typography>
+          {hasError ? <Typography className="loginError" component="h2">{errorMessage}</Typography> : ''}
           <FormControl fullWidth>
             <TextField
               label="Username"

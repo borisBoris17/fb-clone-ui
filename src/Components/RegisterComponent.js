@@ -26,23 +26,27 @@ function RegisterComponent({ setIsLoggedIn, handleCloseRegister, openRegisterMen
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleRegister = () => {
     axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/account/register`, {
       username: username, password: password, email: email, name: name
     }).then(resp => {
-      axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/account/register`, {
-        username: username, password: password, email: email
-      }).then(resp => {
-
-      });
-      util.addTokenToStorage(resp.data.token);
-      setIsLoggedIn(true);
-      setUsername('');
-      setPassword('');
-      setEmail('');
-      handleCloseRegister();
-    });
+      if (resp.data.token === undefined) { 
+        setHasError(true);
+        setErrorMessage(resp.data);
+      } else {
+        setHasError(false);
+        setErrorMessage('');
+        util.addTokenToStorage(resp.data.token);
+        setIsLoggedIn(true);
+        setUsername('');
+        setPassword('');
+        setEmail('');
+        handleCloseRegister();
+      }
+    })
   }
 
   return (
@@ -55,8 +59,9 @@ function RegisterComponent({ setIsLoggedIn, handleCloseRegister, openRegisterMen
       <Box sx={modalStyle}>
         <Stack spacing={3}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Login
+            Register
           </Typography>
+          {hasError ? <Typography className="loginError" component="h2">{errorMessage}</Typography> : ''}
           <FormControl fullWidth>
             <TextField
               label="Username"
