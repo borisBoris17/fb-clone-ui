@@ -23,6 +23,16 @@
   margin-bottom: 2%;
 }
 
+.addComment__middle {
+  display: flex;
+  align-items: center;
+  margin: 2%;
+}
+
+.addedImage {
+  max-width: 100%;
+}
+
 .commentBlock {
   display: flex;
   align-items: center;

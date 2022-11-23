@@ -15,11 +15,11 @@ function AddCommentComponent({ profileData, placeholder, handlePostComment, butt
   const postComment = () => {
     handlePostComment(postText, files);
     setPostText('');
+    setFiles([]);
   }
 
   const handleFileUpload = (event) => {
-    console.log("test");
-    setFiles(event.target.files);
+    setFiles([...event.target.files]);
   }
 
   return (
@@ -40,43 +40,27 @@ function AddCommentComponent({ profileData, placeholder, handlePostComment, butt
           InputProps={{
             endAdornment: (
               <>
-                
-                <Button
-                  variant="contained"
+                <IconButton
+                  aria-label="upload"
                   component="label"
-                  onChange={handleFileUpload}
                 >
+                  <AddPhotoAlternateIcon />
                   <input
-                  style={{
-                    display: "none",
-                  }}
-                  id="choose-file"
-                  type="file"
-                />
-                    <IconButton
-                  style={{
-                    pointerEvents: "none",
-                  }}
-                      aria-label="Upload Images"
-                    >
-                      <AddPhotoAlternateIcon />
-                    </IconButton>
-                </Button>
-              </>)
+                    hidden
+                    name="images"
+                    type="file"
+                    onChange={handleFileUpload}
+                  />
+                </IconButton>
+              </>
+            ),
           }}
-
         />
-        {/* <Button
-          variant="contained"
-          component="label"
-        >
-          Upload File
-          <input
-            type="file"
-            hidden
-            onChange={handleFileUpload}
-          />
-         */}
+
+      </div>
+      <div className="addComment__middle">
+        {files.length > 0 ? <img
+          className='addedImage' src={URL.createObjectURL(files[0])} alt="preview image" /> : ""}
       </div>
       <div className="addComment__bottom">
         <Button

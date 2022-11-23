@@ -90,14 +90,14 @@ function PostComponent({post, profileData}) {
           margin: '2%',
         }}>{post.content !== undefined ? post.content.text : ""}
       </Typography>
-      {post.content.images.map((image, index) => <Box
+      {post.content.images != undefined ? post.content.images.map((image, index) => <Box
         key={index}
         component="img"
         sx={{
           width: '100%',
         }}
-        src={`${config.api.protocol}://${config.api.host}/images/${image}`}
-      />)}
+        src={`${config.api.protocol}://${config.api.host}/${image.path}`}
+      />) : ""}
       <div className="postInteractions">
         {likes.length > 0 ? <LikeBugComponent likes={likes} /> : ''}
         {comments.length > 0 ? <CommentBugComponent toggleShowComments={toggleShowComments} comments={comments} /> : ''}

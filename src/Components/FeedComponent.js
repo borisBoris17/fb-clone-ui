@@ -30,17 +30,20 @@ function FeedComponent({ profileId, isLoggedIn }) {
     const savedAuthoredRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, authoredRelation);
     const savedAuthoredByRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, authoredByRelation);
     var formData = new FormData();
-    formData.append("postId", savedPost.node_id);
+    formData.append("postId", savedPost.data.node_id);
     formData.append("profileId", profileData.node_id);
-    formData.append("images", files);
+    files.forEach(file => {
+      formData.append("images", file);
+    })
     axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/node/uploadImage`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
+    }).then(resp => {
+      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/feed/${profileId}`).then(resp => {
+        setPosts(resp.data)
+      });
     })
-    axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/feed/${profileId}`).then(resp => {
-      setPosts(resp.data)
-    });
   }
 
   const createPostObject = (postText) => {
@@ -64,7 +67,7 @@ function FeedComponent({ profileId, isLoggedIn }) {
 
   return (
     <div >
-      {isLoggedIn && profileData.content !== undefined  ?
+      {isLoggedIn && profileData.content !== undefined ?
         <div className="feed">
           <div>
             <Card className="postsCard">
