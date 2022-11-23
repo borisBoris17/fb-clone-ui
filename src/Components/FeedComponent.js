@@ -22,16 +22,28 @@ function FeedComponent({ profileId, isLoggedIn }) {
     }
   }, [profileId]);
 
-  const handleCreateNewPost = async (postText) => {
+  const handleCreateNewPost = async (postText, files) => {
     const post = createPostObject(postText);
     const savedPost = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/node/`, post);
     const authoredRelation = createRelationObject(profileData.node_id, savedPost.data.node_id, 'Authored');
     const authoredByRelation = createRelationObject(savedPost.data.node_id, profileData.node_id, 'Authored_by');
     const savedAuthoredRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, authoredRelation);
     const savedAuthoredByRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, authoredByRelation);
-    axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/feed/${profileId}`).then(resp => {
-      setPosts(resp.data)
-    });
+    var formData = new FormData();
+    formData.append("postId", savedPost.data.node_id);
+    formData.append("profileId", profileData.node_id);
+    files.forEach(file => {
+      formData.append("images", file);
+    })
+    axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/node/uploadImage`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(resp => {
+      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/feed/${profileId}`).then(resp => {
+        setPosts(resp.data)
+      });
+    })
   }
 
   const createPostObject = (postText) => {
@@ -55,7 +67,7 @@ function FeedComponent({ profileId, isLoggedIn }) {
 
   return (
     <div >
-      {isLoggedIn && profileData.content !== undefined  ?
+      {isLoggedIn && profileData.content !== undefined ?
         <div className="feed">
           <div>
             <Card className="postsCard">
