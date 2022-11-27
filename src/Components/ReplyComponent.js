@@ -11,10 +11,10 @@ const ReplyComponent = (props) => {
 
   useEffect(() => {
     if (props.reply.node_id) {
-      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${props.reply.node_id}/Authored_by/Profile`).then(resp => {
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${props.reply.node_id}/Authored_by/Profile`).then(resp => {
         setProfileData(resp.data[0]);
       });
-      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${props.reply.node_id}/Comment/Comment`).then(resp => {
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${props.reply.node_id}/Comment/Comment`).then(resp => {
         setReplies(resp.data);
       });
     }

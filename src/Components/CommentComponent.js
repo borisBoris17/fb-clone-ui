@@ -15,13 +15,13 @@ function CommentComponent({ comment, profileData }) {
 
   useEffect(() => {
     if (comment.node_id) {
-      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${comment.node_id}/Authored_by/Profile`).then(resp => {
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${comment.node_id}/Authored_by/Profile`).then(resp => {
         setAuthor(resp.data[0]);
       });
-      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${comment.node_id}/Comment/Comment`).then(resp => {
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${comment.node_id}/Comment/Comment`).then(resp => {
         setReplies(resp.data);
       });
-      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/relation/${comment.node_id}/Liked_by`).then(resp => {
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/${comment.node_id}/Liked_by`).then(resp => {
         setLikes(resp.data);
       });
     }
@@ -29,14 +29,14 @@ function CommentComponent({ comment, profileData }) {
 
   const handleCreateNewReply = async (replyText) => {
     const reply = createCommentObject(replyText);
-    const savedReply = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/node/`, reply);
+    const savedReply = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/node/`, reply);
     const commentRelation = createRelationObject(comment.node_id, savedReply.data.node_id, 'Comment');
     const authoredRelation = createRelationObject(profileData.node_id, savedReply.data.node_id, 'Authored');
     const authoredByRelation = createRelationObject(savedReply.data.node_id, profileData.node_id, 'Authored_by');
-    const savedCommentRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, commentRelation);
-    const savedAuthoredRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, authoredRelation);
-    const savedAuthoredByRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, authoredByRelation);
-    axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${comment.node_id}/Comment/Comment`).then(resp => {
+    const savedCommentRelation = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, commentRelation);
+    const savedAuthoredRelation = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, authoredRelation);
+    const savedAuthoredByRelation = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, authoredByRelation);
+    axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${comment.node_id}/Comment/Comment`).then(resp => {
       setReplies(resp.data);
       setShowCommentInput(false);
     });
@@ -45,9 +45,9 @@ function CommentComponent({ comment, profileData }) {
   const handleLikeComment = async () => {
     const likeRelation = createRelationObject(profileData.node_id, comment.node_id, 'Like');
     const likedByRelation = createRelationObject(comment.node_id, profileData.node_id, 'Liked_by');
-    const savedLikeRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, likeRelation);
-    const savedLikedByRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, likedByRelation);
-    axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/relation/${comment.node_id}/Liked_by`).then(resp => {
+    const savedLikeRelation = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, likeRelation);
+    const savedLikedByRelation = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, likedByRelation);
+    axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/${comment.node_id}/Liked_by`).then(resp => {
       setLikes(resp.data);
     });
   }

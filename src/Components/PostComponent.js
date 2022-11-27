@@ -17,13 +17,13 @@ function PostComponent({post, profileData}) {
 
   useEffect(() => {
     if (post) {
-      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${post.node_id}/Comment/Comment`).then(resp => {
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${post.node_id}/Comment/Comment`).then(resp => {
         setComments(resp.data);
       });
-      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/relation/${post.node_id}/Liked_by`).then(resp => {
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/${post.node_id}/Liked_by`).then(resp => {
         setLikes(resp.data);
       });
-      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${post.node_id}/Authored_by/Profile`).then(resp => {
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${post.node_id}/Authored_by/Profile`).then(resp => {
         setAuthor(resp.data[0]);
       });
     }
@@ -41,14 +41,14 @@ function PostComponent({post, profileData}) {
 
   const handleCreateNewComment = async (commentText) => {
     const comment = createCommentObject(commentText);
-    const savedComment = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/node/`, comment);
+    const savedComment = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/node/`, comment);
     const commentRelation = createRelationObject(post.node_id, savedComment.data.node_id, 'Comment');
     const authoredRelation = createRelationObject(profileData.node_id, savedComment.data.node_id, 'Authored');
     const authoredByRelation = createRelationObject(savedComment.data.node_id, profileData.node_id, 'Authored_by');
-    const savedCommentRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, commentRelation);
-    const savedAuthoredRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, authoredRelation);
-    const savedAuthoredByRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, authoredByRelation);
-    axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${post.node_id}/Comment/Comment`).then(resp => {
+    const savedCommentRelation = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, commentRelation);
+    const savedAuthoredRelation = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, authoredRelation);
+    const savedAuthoredByRelation = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, authoredByRelation);
+    axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${post.node_id}/Comment/Comment`).then(resp => {
         setComments(resp.data);
     });
   }
@@ -56,9 +56,9 @@ function PostComponent({post, profileData}) {
   const handleLikePost = async () => {
     const likeRelation = createRelationObject(profileData.node_id, post.node_id, 'Like');
     const likedByRelation = createRelationObject(post.node_id, profileData.node_id, 'Liked_by');
-    const savedLikeRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, likeRelation);
-    const savedLikedByRelation = await axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/relation/`, likedByRelation);
-    axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/relation/${post.node_id}/Liked_by`).then(resp => {
+    const savedLikeRelation = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, likeRelation);
+    const savedLikedByRelation = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, likedByRelation);
+    axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/${post.node_id}/Liked_by`).then(resp => {
         setLikes(resp.data);
     });
   }

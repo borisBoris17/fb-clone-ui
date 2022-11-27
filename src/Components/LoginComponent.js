@@ -28,7 +28,7 @@ function LoginComponent({setIsLoggedIn, handleCloseLogin, openLoginMenu, handleO
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = () => {
-    axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/account/login`, {
+    axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/account/login`, {
       username: username, password: password
     }).then(resp => {
       setHasError(false);

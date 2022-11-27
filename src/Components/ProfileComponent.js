@@ -10,10 +10,10 @@ function ProfileComponent({profileId, isLoggedIn}) {
 
   useEffect(() => {
     if (profileId) {
-      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${profileId}`).then(resp => {
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profileId}`).then(resp => {
         setProfileData(resp.data[0]);
       });
-      axios.get(`${config.api.protocol}://${config.api.host}/fb-clone/node/${profileId}/Authored/Post`).then(resp => {
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profileId}/Authored/Post`).then(resp => {
         setPosts(resp.data);
       })
     }
