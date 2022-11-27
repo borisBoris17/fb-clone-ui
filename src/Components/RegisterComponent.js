@@ -30,7 +30,7 @@ function RegisterComponent({ setIsLoggedIn, handleCloseRegister, openRegisterMen
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleRegister = () => {
-    axios.post(`${config.api.protocol}://${config.api.host}/fb-clone/account/register`, {
+    axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/account/register`, {
       username: username, password: password, email: email, name: name
     }).then(resp => {
       if (resp.data.token === undefined) { 

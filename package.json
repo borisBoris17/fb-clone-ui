@@ -1,11 +1,10 @@
 {
-  "name": "fb-clone-ui",
+  "name": "memory-social-ui",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@material-ui/styles": "^4.11.5",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.12",
     "@testing-library/jest-dom": "^5.16.5",
