@@ -12,7 +12,11 @@
   margin-right: 200px;
   margin-left: 200px;
   margin-bottom: 20px;
-  /* min-width: 500px; */
+  min-width: 30vw;
+}
+
+.postImages {
+  width: 100%;
 }
 
 .createPost {
@@ -25,8 +29,8 @@
 }
 
 .sideComponent {
-  align-content: left;
-  width: 450px;
+  align-content: start;
+  width: 25vw;
   min-height: 90vh;
   margin-right: 20px;
   margin-left: 10px;

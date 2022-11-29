@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import config from '../config';
-import { Grid, Card, Typography } from '@mui/material';
+import { Grid, Card } from '@mui/material';
 import PostComponent from './PostComponent';
 
 function ProfileComponent({profileId, isLoggedIn}) {

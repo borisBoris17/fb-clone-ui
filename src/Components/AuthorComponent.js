@@ -1,5 +1,5 @@
 import { React } from 'react';
-import { Grid, Box, Typography, Avatar } from '@mui/material';
+import { Typography, Avatar } from '@mui/material';
 import config from '../config';
 import '../Stylesheets/Author.css'
 

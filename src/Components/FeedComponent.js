@@ -1,10 +1,9 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import config from '../config';
-import { Grid, Card, Typography } from '@mui/material';
+import { Card } from '@mui/material';
 import PostComponent from './PostComponent';
 import '../Stylesheets/Feed.css';
-import AuthorComponent from './AuthorComponent';
 import AddCommentComponent from './AddCommentComponent';
 
 function FeedComponent({ profileId, isLoggedIn }) {
@@ -27,8 +26,8 @@ function FeedComponent({ profileId, isLoggedIn }) {
     const savedPost = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/node/`, post);
     const authoredRelation = createRelationObject(profileData.node_id, savedPost.data.node_id, 'Authored');
     const authoredByRelation = createRelationObject(savedPost.data.node_id, profileData.node_id, 'Authored_by');
-    const savedAuthoredRelation = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, authoredRelation);
-    const savedAuthoredByRelation = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, authoredByRelation);
+    await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, authoredRelation);
+    await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, authoredByRelation);
     var formData = new FormData();
     formData.append("postId", savedPost.data.node_id);
     formData.append("profileId", profileData.node_id);

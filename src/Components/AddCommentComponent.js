@@ -1,7 +1,6 @@
 import { React, useState } from 'react';
-import { Button, TextField, Avatar, InputAdornment, IconButton } from '@mui/material';
+import { Button, TextField, Avatar, IconButton } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import axios from 'axios';
 import config from '../config';
 
 function AddCommentComponent({ profileData, placeholder, handlePostComment, buttonLabel }) {
@@ -60,7 +59,7 @@ function AddCommentComponent({ profileData, placeholder, handlePostComment, butt
       </div>
       <div className="addComment__middle">
         {files.length > 0 ? <img
-          className='addedImage' src={URL.createObjectURL(files[0])} alt="preview image" /> : ""}
+          className='addedImage' src={URL.createObjectURL(files[0])} alt="preview" /> : ""}
       </div>
       <div className="addComment__bottom">
         <Button
