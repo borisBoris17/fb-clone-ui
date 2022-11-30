@@ -1,7 +1,6 @@
 import { React } from 'react';
 import { Typography, Avatar } from '@mui/material';
 import config from '../config';
-import '../Stylesheets/Author.css'
 
 function AuthorComponent({ author, timestamp }) {
   return (

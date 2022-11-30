@@ -1,0 +1,13 @@
+.profileComponent {
+  display: flex;
+}
+
+.profile {
+  flex: 1 1 auto;
+  margin: 1% 5%;
+}
+
+.profileSideComponent {
+  flex: 0 0 40%;
+  margin: 1%;
+}

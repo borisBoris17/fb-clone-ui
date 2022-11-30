@@ -1,44 +1,35 @@
-.feed {
-  margin-top: 1%;
+.feedComponent {
   display: flex;
-  /* align-items: center; */
-  align-content: flex-start;
-  flex-direction: row;
 }
 
-.postsCard {
-  flex: 1;
-  padding: 0%;
-  margin-right: 200px;
-  margin-left: 200px;
-  margin-bottom: 20px;
-  min-width: 30vw;
+.feed {
+  flex: 1 1 auto;
+  margin: 1% 10%;
+}
+
+.FeedSideComponent {
+  flex: 0 0 25%;
+  margin: 1%;
 }
 
 .postImages {
   width: 100%;
 }
 
-.createPost {
-  margin-top: 2%;
+.postsCard {
+  margin-bottom: 2%;
 }
 
 .missingProfileMessageDiv {
   margin: 2%;
-  width: 50vw;
-}
-
-.sideComponent {
-  align-content: start;
-  width: 25vw;
-  min-height: 90vh;
-  margin-right: 20px;
-  margin-left: 10px;
-  margin-bottom: 20px;
 }
 
 @media (max-width: 800px) {
-  .feed {
+  .feedComponent {
+    flex-direction: column;
+  }
+
+  .profileComponent {
     flex-direction: column;
   }
 

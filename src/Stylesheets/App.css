@@ -1,25 +1,19 @@
 .App {
   text-align: center;
-  min-width: 500px;
 }
 
 .AppBar {
   background-color: black;
 }
 
+.AppBarContainer {
+  display: flex;
+}
+
 html,body {
 	margin:0;
 	padding:0;
 	height:100%; /* needed for container min-height */
-}
-
-.Profile {
-  position: relative; /* needed for footer positioning*/
-  margin-top: 1%;
-  margin-bottom: 1%;
-  height: 100%;
-  height: auto !important; /* real browsers */
-  min-height: 100%; /* real browsers */
 }
 
 .commentTextField fieldset {
