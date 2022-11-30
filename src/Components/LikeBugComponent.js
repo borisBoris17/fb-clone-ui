@@ -1,6 +1,5 @@
 import { React } from 'react';
 import { Typography } from '@mui/material';
-import '../Stylesheets/Post.css'
 
 function LikeBugComponent(props) {
   return (

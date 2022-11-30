@@ -1,4 +1,10 @@
-import './Stylesheets/App.css'
+import './Stylesheets/App.css';
+import './Stylesheets/Author.css';
+import './Stylesheets/Comment.css';
+import './Stylesheets/Feed.css';
+import './Stylesheets/Post.css';
+import './Stylesheets/Profile.css';
+import './Stylesheets/Author.css';
 import { React, useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 import ProfileComponent from './Components/ProfileComponent';

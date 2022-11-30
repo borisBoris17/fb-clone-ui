@@ -2,9 +2,9 @@ import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import config from '../config';
 import { Card } from '@mui/material';
-import PostComponent from './PostComponent';
 import '../Stylesheets/Feed.css';
 import AddCommentComponent from './AddCommentComponent';
+import PostListComponent from './PostListComponent';
 
 function FeedComponent({ profileId, isLoggedIn }) {
   const [profileData, setProfileData] = useState({});
@@ -65,36 +65,32 @@ function FeedComponent({ profileId, isLoggedIn }) {
   }
 
   return (
-    <div >
-      {isLoggedIn && profileData.content !== undefined ?
+    <div className="feedComponent">
+      {isLoggedIn && profileData.content !== undefined ? <>
         <div className="feed">
           <div>
             <Card className="postsCard">
-              <div className="createPost">
                 {profileData.content !== undefined ? <AddCommentComponent profileData={profileData} placeholder={`What is on your mind, ${profileData.content.name}?`} buttonLabel="Post" handlePostComment={handleCreateNewPost} /> : ''}
-              </div>
             </Card>
-            {posts.map(post => <Card key={post.node_id} className="postsCard" > <PostComponent profileData={profileData} post={post} /></Card>)}
+            {posts !== undefined && posts.length > 1 ? <PostListComponent profileData={profileData} posts={posts} /> : ""}
           </div>
-          <div>
-            <Card className="sideComponent">
-
-            </Card>
-          </div>
-        </div> :
+        </div>
+        <div className="FeedSideComponent">
+        <Card>
+        a
+        </Card>
+      </div> </> : <>
         <div className="feed">
-          <div>
             <Card className="postsCard">
-              <div className="missingProfileMessageDiv">No profile loaded, make sure you are logged in...
-              </div>
+              <div className="missingProfileMessageDiv">No profile loaded, make sure you are logged in...</div>
             </Card>
-          </div>
-          <div>
-            <Card className="sideComponent">
-
-            </Card>
-          </div>
-        </div>}
+        </div>
+        
+        <div className="FeedSideComponent">
+        <Card>
+          asdfe
+        </Card>
+      </div> </>}
     </div>
   );
 }

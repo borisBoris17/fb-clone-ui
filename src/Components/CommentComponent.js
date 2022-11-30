@@ -3,7 +3,6 @@ import axios from 'axios';
 import config from '../config';
 import { Button, Typography } from '@mui/material';
 import AuthorComponent from './AuthorComponent';
-import '../Stylesheets/Comment.css'
 import AddCommentComponent from './AddCommentComponent';
 
 function CommentComponent({ comment, profileData }) {

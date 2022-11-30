@@ -7,7 +7,6 @@ import AuthorComponent from './AuthorComponent';
 import LikeBugComponent from './LikeBugComponent';
 import CommentBugComponent from './CommentBugComponent';
 import AddCommentComponent from './AddCommentComponent';
-import '../Stylesheets/Post.css'
 
 function PostComponent({post, profileData}) {
   const [author, setAuthor] = useState({});

@@ -17,6 +17,7 @@ function AppBarComponent({ title, isLoggedIn, setIsLoggedIn, handleLogOut }) {
   const handleCloseRegister = () => setOpenRegisterMenu(false);
 
   return (
+    <div className="AppBarContainer">
     <AppBar className="AppBar" position="static">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -27,6 +28,7 @@ function AppBarComponent({ title, isLoggedIn, setIsLoggedIn, handleLogOut }) {
           <RegisterComponent openRegisterMenu={openRegisterMenu} handleCloseRegister={handleCloseRegister} setIsLoggedIn={setIsLoggedIn} /></>}
       </Toolbar>
     </AppBar>
+    </div>
   );
 }
 
