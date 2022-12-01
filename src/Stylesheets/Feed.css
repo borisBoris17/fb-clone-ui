@@ -29,6 +29,11 @@
     flex-direction: column;
   }
 
+  .feed {
+    flex: 1 1 auto;
+    margin: 0%;
+  }
+
   .profileComponent {
     flex-direction: column;
   }
@@ -39,6 +44,5 @@
     margin-right: 0px;
     margin-left: 0px;
     margin-bottom: 20px;
-    min-width: 500px;
   }
 }
