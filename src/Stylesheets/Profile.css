@@ -11,3 +11,10 @@
   flex: 0 0 40%;
   margin: 1%;
 }
+
+@media (max-width: 800px) {
+  .profile {
+    flex: 1 1 auto;
+    margin: 0%;
+  }
+}
