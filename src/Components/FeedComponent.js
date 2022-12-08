@@ -1,20 +1,18 @@
-import { React, useEffect, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import config from '../config';
 import { Card } from '@mui/material';
 import '../Stylesheets/Feed.css';
 import AddCommentComponent from './AddCommentComponent';
 import PostListComponent from './PostListComponent';
+import { ProfileContext } from '../App';
 
 function FeedComponent({ profileId, isLoggedIn }) {
-  const [profileData, setProfileData] = useState({});
   const [posts, setPosts] = useState([]);
+  const { profile } = useContext(ProfileContext);
 
   useEffect(() => {
     if (profileId && profileId !== '') {
-      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profileId}`).then(resp => {
-        setProfileData(resp.data[0]);
-      });
       axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/feed/${profileId}`).then(resp => {
         setPosts(resp.data)
       });
@@ -24,13 +22,13 @@ function FeedComponent({ profileId, isLoggedIn }) {
   const handleCreateNewPost = async (postText, files) => {
     const post = createPostObject(postText);
     const savedPost = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/node/`, post);
-    const authoredRelation = createRelationObject(profileData.node_id, savedPost.data.node_id, 'Authored');
-    const authoredByRelation = createRelationObject(savedPost.data.node_id, profileData.node_id, 'Authored_by');
+    const authoredRelation = createRelationObject(profile.node_id, savedPost.data.node_id, 'Authored');
+    const authoredByRelation = createRelationObject(savedPost.data.node_id, profile.node_id, 'Authored_by');
     await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, authoredRelation);
     await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, authoredByRelation);
     var formData = new FormData();
     formData.append("postId", savedPost.data.node_id);
-    formData.append("profileId", profileData.node_id);
+    formData.append("profileId", profile.node_id);
     files.forEach(file => {
       formData.append("images", file);
     })
@@ -66,13 +64,13 @@ function FeedComponent({ profileId, isLoggedIn }) {
 
   return (
     <div className="feedComponent">
-      {isLoggedIn && profileData.content !== undefined ? <>
+      {isLoggedIn && profile.content !== undefined ? <>
         <div className="feed">
           <div>
             <Card className="postsCard">
-                {profileData.content !== undefined ? <AddCommentComponent profileData={profileData} placeholder={`What is on your mind, ${profileData.content.name}?`} buttonLabel="Post" handlePostComment={handleCreateNewPost} /> : ''}
+                {profile.content !== undefined ? <AddCommentComponent placeholder={`What is on your mind, ${profile.content.name}?`} buttonLabel="Post" handlePostComment={handleCreateNewPost} /> : ''}
             </Card>
-            {posts !== undefined && posts.length > 1 ? <PostListComponent profileData={profileData} posts={posts} /> : ""}
+            {posts !== undefined && posts.length > 1 ? <PostListComponent posts={posts} /> : ""}
           </div>
         </div>
         <div className="FeedSideComponent">

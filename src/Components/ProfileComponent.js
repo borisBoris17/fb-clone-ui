@@ -1,34 +1,32 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import config from '../config';
 import { Card } from '@mui/material';
 import PostListComponent from './PostListComponent';
 import ProfileSummaryComponent from './ProfileSummaryComponent';
+import { ProfileContext } from '../App';
 
-function ProfileComponent({ profileId, isLoggedIn, setProfileId }) {
-  const [profileData, setProfileData] = useState({});
+function ProfileComponent({ isLoggedIn, setProfileId }) {
   const [posts, setPosts] = useState([]);
+  const { profile } = useContext(ProfileContext);
 
   useEffect(() => {
-    if (profileId) {
-      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profileId}`).then(resp => {
-        setProfileData(resp.data[0]);
-      });
-      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profileId}/Authored/Post`).then(resp => {
+    if (profile.node_id) {
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profile.node_id}/Authored/Post`).then(resp => {
         setPosts(resp.data);
       })
     }
-  }, [profileId]);
+  }, [profile.node_id]);
 
   return (
     <div className="profileComponent">
       {isLoggedIn !== undefined && isLoggedIn ? <>
         <div className="profile">
-            {posts !== undefined && posts.length > 1 ? <PostListComponent profileData={profileData} posts={posts} /> : ""}
+            {posts !== undefined && posts.length > 1 ? <PostListComponent posts={posts} /> : ""}
         </div>
         <div className='profileSideComponent'>
           <Card>
-            <ProfileSummaryComponent profileData={profileData} setProfileData={setProfileData} setProfileId={setProfileId} />
+            <ProfileSummaryComponent setProfileId={setProfileId} />
           </Card>
         </div>
       </> : <>

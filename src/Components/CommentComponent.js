@@ -1,15 +1,17 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import config from '../config';
 import { Button, Typography } from '@mui/material';
 import AuthorComponent from './AuthorComponent';
 import AddCommentComponent from './AddCommentComponent';
+import { ProfileContext } from '../App';
 
-function CommentComponent({ comment, profileData }) {
+function CommentComponent({ comment }) {
   const [author, setAuthor] = useState({});
   const [replies, setReplies] = useState([]);
   const [likes, setLikes] = useState([]);
   const [showCommentInput, setShowCommentInput] = useState(false);
+  const { profile } = useContext(ProfileContext);
 
   useEffect(() => {
     if (comment.node_id) {
@@ -29,8 +31,8 @@ function CommentComponent({ comment, profileData }) {
     const reply = createCommentObject(replyText);
     const savedReply = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/node/`, reply);
     const commentRelation = createRelationObject(comment.node_id, savedReply.data.node_id, 'Comment');
-    const authoredRelation = createRelationObject(profileData.node_id, savedReply.data.node_id, 'Authored');
-    const authoredByRelation = createRelationObject(savedReply.data.node_id, profileData.node_id, 'Authored_by');
+    const authoredRelation = createRelationObject(profile.node_id, savedReply.data.node_id, 'Authored');
+    const authoredByRelation = createRelationObject(savedReply.data.node_id, profile.node_id, 'Authored_by');
     await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, commentRelation);
     await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, authoredRelation);
     await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, authoredByRelation);
@@ -41,8 +43,8 @@ function CommentComponent({ comment, profileData }) {
   }
 
   const handleLikeComment = async () => {
-    const likeRelation = createRelationObject(profileData.node_id, comment.node_id, 'Like');
-    const likedByRelation = createRelationObject(comment.node_id, profileData.node_id, 'Liked_by');
+    const likeRelation = createRelationObject(profile.node_id, comment.node_id, 'Like');
+    const likedByRelation = createRelationObject(comment.node_id, profile.node_id, 'Liked_by');
     await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, likeRelation);
     await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, likedByRelation);
     axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/${comment.node_id}/Liked_by`).then(resp => {
@@ -77,13 +79,13 @@ function CommentComponent({ comment, profileData }) {
             <Typography className='commentText'>{comment.content !== undefined ? comment.content.text : ""}</Typography>
             {likes.length > 0 ? <Typography className='commentLikes'>{likes.length} Like</Typography> : ''}
           </div>
-          {showCommentInput ? <AddCommentComponent profileData={profileData} placeholder={"Reply..."} buttonLabel={"Reply"} handlePostComment={handleCreateNewReply} /> : ''}
+          {showCommentInput ? <AddCommentComponent placeholder={"Reply..."} buttonLabel={"Reply"} handlePostComment={handleCreateNewReply} /> : ''}
           <div className="commentInterations">
             <Button varient="text" size="small" onClick={handleLikeComment}>Like</Button>
             <Button varient="text" size="small" onClick={() => {setShowCommentInput(!showCommentInput)}}>Reply</Button>
           </div>
           <div className='replies'>
-            {replies.map(reply => <CommentComponent key={reply.node_id} profileData={profileData} comment={reply}/>)}
+            {replies.map(reply => <CommentComponent key={reply.node_id} comment={reply}/>)}
           </div>
         </div> : ""}
     </div>
