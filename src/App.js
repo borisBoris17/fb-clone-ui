@@ -77,7 +77,7 @@ function App() {
             <Grid item lg={10}>
               <Routes>
                 <Route path="/" element={<FeedComponent profileId={profileId} isLoggedIn={isLoggedIn} />} />
-                <Route path="/profile" element={<ProfileComponent profileId={profileId} isLoggedIn={isLoggedIn} />} />
+                <Route path="/profile" element={<ProfileComponent profileId={profileId} isLoggedIn={isLoggedIn} setProfileId={setProfileId}/>} />
               </Routes>
             </Grid>
           </Grid>

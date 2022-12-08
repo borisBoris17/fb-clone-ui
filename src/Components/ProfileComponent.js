@@ -3,8 +3,9 @@ import axios from 'axios';
 import config from '../config';
 import { Card } from '@mui/material';
 import PostListComponent from './PostListComponent';
+import ProfileSummaryComponent from './ProfileSummaryComponent';
 
-function ProfileComponent({ profileId, isLoggedIn }) {
+function ProfileComponent({ profileId, isLoggedIn, setProfileId }) {
   const [profileData, setProfileData] = useState({});
   const [posts, setPosts] = useState([]);
 
@@ -27,7 +28,7 @@ function ProfileComponent({ profileId, isLoggedIn }) {
         </div>
         <div className='profileSideComponent'>
           <Card>
-            asdfe
+            <ProfileSummaryComponent profileData={profileData} setProfileData={setProfileData} setProfileId={setProfileId} />
           </Card>
         </div>
       </> : <>
@@ -37,9 +38,9 @@ function ProfileComponent({ profileId, isLoggedIn }) {
             </Card>
         </div>
         <div className="profileSideComponent">
-        <Card>
-          asdfe
-        </Card>
+          <Card>
+            asdfe
+          </Card>
       </div> </>}
     </div>
   );
