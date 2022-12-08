@@ -4,7 +4,7 @@ import { List } from '@mui/material';
 import { WorkOutline, HomeOutlined, DirectionsRunOutlined } from '@mui/icons-material';
 import DisplayProfileDataComponent from './DisplayProfileDataComponent';
 import EditProfileDataComponent from './EditProfileDataComponent';
-import { ProfileContext } from '../App';
+import { ProfileContext } from '../../App';
 
 function ProfileDataComponent({ isEditMode }) {
   const [hobbiesString, setHobbiesString] = useState('');

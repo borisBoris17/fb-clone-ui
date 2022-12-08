@@ -5,8 +5,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
-const config = require('../config');
-const util = require('../Utilities/util');
+const config = require('../../config');
+const util = require('../../Utilities/util');
 
 const modalStyle = {
   position: 'absolute',
@@ -20,27 +20,29 @@ const modalStyle = {
   p: 4,
 };
 
-function LoginComponent({setIsLoggedIn, handleCloseLogin, openLoginMenu, handleOpenRegister}) {
+function LoginComponent({ setIsLoggedIn, handleCloseLogin, openLoginMenu, handleOpenRegister }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = () => {
-    axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/account/login`, {
-      username: username, password: password
-    }).then(resp => {
-      setHasError(false);
-      setErrorMessage('');
-      util.addTokenToStorage(resp.data.token);
-      setIsLoggedIn(true);
-      setUsername('');
-      setPassword('');
-      handleCloseLogin();
-    }).catch(resp => {
-      setHasError(true);
-      setErrorMessage(resp.response.data);
-    });
+    if (username !== undefined && username !== '') {
+      axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/account/login`, {
+        username: username.toLowerCase(), password: password
+      }).then(resp => {
+        setHasError(false);
+        setErrorMessage('');
+        util.addTokenToStorage(resp.data.token);
+        setIsLoggedIn(true);
+        setUsername('');
+        setPassword('');
+        handleCloseLogin();
+      }).catch(resp => {
+        setHasError(true);
+        setErrorMessage(resp.response.data);
+      });
+    }
   }
 
   const handleRegister = () => {

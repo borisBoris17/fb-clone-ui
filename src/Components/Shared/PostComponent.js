@@ -1,13 +1,13 @@
 import { React, useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import config from '../config';
+import config from '../../config';
 import { Box, Typography, Button } from '@mui/material';
 import CommentComponent from './CommentComponent';
 import AuthorComponent from './AuthorComponent';
 import LikeBugComponent from './LikeBugComponent';
 import CommentBugComponent from './CommentBugComponent';
 import AddCommentComponent from './AddCommentComponent';
-import { ProfileContext } from '../App';
+import { ProfileContext } from '../../App';
 
 function PostComponent({post}) {
   const [author, setAuthor] = useState({});

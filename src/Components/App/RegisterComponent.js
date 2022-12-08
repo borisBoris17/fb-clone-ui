@@ -5,8 +5,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
-const config = require('../config');
-const util = require('../Utilities/util');
+const config = require('../../config');
+const util = require('../../Utilities/util');
 
 const modalStyle = {
   position: 'absolute',
@@ -29,23 +29,25 @@ function RegisterComponent({ setIsLoggedIn, handleCloseRegister, openRegisterMen
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleRegister = () => {
-    axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/account/register`, {
-      username: username, password: password, email: email, name: name
-    }).then(resp => {
-      if (resp.data.token === undefined) { 
-        setHasError(true);
-        setErrorMessage(resp.data);
-      } else {
-        setHasError(false);
-        setErrorMessage('');
-        util.addTokenToStorage(resp.data.token);
-        setIsLoggedIn(true);
-        setUsername('');
-        setPassword('');
-        setEmail('');
-        handleCloseRegister();
-      }
-    })
+    if (username !== undefined && username !== '') {
+      axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/account/register`, {
+        username: username.toLowerCase(), password: password, email: email, name: name
+      }).then(resp => {
+        if (resp.data.token === undefined) {
+          setHasError(true);
+          setErrorMessage(resp.data);
+        } else {
+          setHasError(false);
+          setErrorMessage('');
+          util.addTokenToStorage(resp.data.token);
+          setIsLoggedIn(true);
+          setUsername('');
+          setPassword('');
+          setEmail('');
+          handleCloseRegister();
+        }
+      })
+    }
   }
 
   return (

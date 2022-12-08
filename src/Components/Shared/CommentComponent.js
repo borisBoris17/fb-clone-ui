@@ -1,10 +1,10 @@
 import { React, useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import config from '../config';
+import config from '../../config';
 import { Button, Typography } from '@mui/material';
 import AuthorComponent from './AuthorComponent';
 import AddCommentComponent from './AddCommentComponent';
-import { ProfileContext } from '../App';
+import { ProfileContext } from '../../App';
 
 function CommentComponent({ comment }) {
   const [author, setAuthor] = useState({});

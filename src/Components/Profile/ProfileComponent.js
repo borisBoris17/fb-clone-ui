@@ -1,10 +1,10 @@
 import { React, useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import config from '../config';
+import config from '../../config';
 import { Card } from '@mui/material';
-import PostListComponent from './PostListComponent';
+import PostListComponent from '../Shared/PostListComponent';
 import ProfileSummaryComponent from './ProfileSummaryComponent';
-import { ProfileContext } from '../App';
+import { ProfileContext } from '../../App';
 
 function ProfileComponent({ isLoggedIn, setProfileId }) {
   const [posts, setPosts] = useState([]);

@@ -7,9 +7,9 @@ import './Stylesheets/Profile.css';
 import './Stylesheets/Author.css';
 import { React, useEffect, useState, useContext, createContext } from 'react';
 import { Grid } from '@mui/material';
-import ProfileComponent from './Components/ProfileComponent';
-import AppBarComponent from './Components/AppBarComponent';
-import SideNavigationComponent from './Components/SideNavigationComponent'
+import ProfileComponent from './Components/Profile/ProfileComponent';
+import AppBarComponent from './Components/App/AppBarComponent';
+import SideNavigationComponent from './Components/App/SideNavigationComponent'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from "@mui/material/CssBaseline";
 import {
@@ -17,7 +17,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import FeedComponent from './Components/FeedComponent';
+import FeedComponent from './Components/Feed/FeedComponent';
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
 import config from './config';

@@ -1,10 +1,10 @@
 import { Avatar } from '@mui/material';
 import { React, useContext, useState } from 'react';
-import config from '../config';
+import config from '../../config';
 import axios from 'axios';
 import { Typography, Button } from '@mui/material';
 import ProfileDataComponent from './ProfileDataComponent';
-import { ProfileContext } from '../App';
+import { ProfileContext } from '../../App';
 
 function ProfileSummaryComponent() {
   const [numFriends, setNumFriends] = useState(1);

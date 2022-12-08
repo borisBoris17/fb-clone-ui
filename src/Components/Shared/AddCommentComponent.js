@@ -1,8 +1,8 @@
 import { React, useState, useContext } from 'react';
 import { Button, TextField, Avatar, IconButton } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import config from '../config';
-import { ProfileContext } from '../App';
+import config from '../../config';
+import { ProfileContext } from '../../App';
 
 function AddCommentComponent({ placeholder, handlePostComment, buttonLabel }) {
   const [postText, setPostText] = useState('');

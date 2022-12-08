@@ -1,11 +1,10 @@
 import { React, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import config from '../config';
+import config from '../../config';
 import { Card } from '@mui/material';
-import '../Stylesheets/Feed.css';
-import AddCommentComponent from './AddCommentComponent';
-import PostListComponent from './PostListComponent';
-import { ProfileContext } from '../App';
+import AddCommentComponent from '../Shared/AddCommentComponent';
+import PostListComponent from '../Shared/PostListComponent';
+import { ProfileContext } from '../../App';
 
 function FeedComponent({ profileId, isLoggedIn }) {
   const [posts, setPosts] = useState([]);
