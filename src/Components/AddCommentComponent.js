@@ -1,11 +1,13 @@
-import { React, useState } from 'react';
+import { React, useState, useContext } from 'react';
 import { Button, TextField, Avatar, IconButton } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import config from '../config';
+import { ProfileContext } from '../App';
 
-function AddCommentComponent({ profileData, placeholder, handlePostComment, buttonLabel }) {
+function AddCommentComponent({ placeholder, handlePostComment, buttonLabel }) {
   const [postText, setPostText] = useState('');
   const [files, setFiles] = useState([]);
+  const { profile } = useContext(ProfileContext);
 
   const handlePostTextChange = (event) => {
     setPostText(event.target.value);
@@ -25,7 +27,7 @@ function AddCommentComponent({ profileData, placeholder, handlePostComment, butt
     <div className='addComment'>
       <div className='addComment__top'>
         <Avatar
-          src={profileData.content !== undefined ? `${config.api.protocol}://${config.api.host}/images/${profileData.content.profileImageName}` : ''}
+          src={profile.content !== undefined ? `${config.api.protocol}://${config.api.host}/images/${profile.content.profileImageName}` : ''}
         />
         <TextField
           className='commentTextField'

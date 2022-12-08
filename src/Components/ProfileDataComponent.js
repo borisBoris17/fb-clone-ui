@@ -1,18 +1,20 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useState, useContext } from 'react';
 // import config from '../config';
 import { List } from '@mui/material';
 import { WorkOutline, HomeOutlined, DirectionsRunOutlined } from '@mui/icons-material';
 import DisplayProfileDataComponent from './DisplayProfileDataComponent';
 import EditProfileDataComponent from './EditProfileDataComponent';
+import { ProfileContext } from '../App';
 
-function ProfileDataComponent({ profileData, isEditMode, setProfileData, setProfileId }) {
+function ProfileDataComponent({ isEditMode }) {
   const [hobbiesString, setHobbiesString] = useState('');
+  const { profile, setProfile } = useContext(ProfileContext);
 
   useEffect(() => {
-    if (profileData.content !== undefined && profileData.content.hobbies !== undefined) {
-      setHobbiesString(printHobbiesList(profileData.content.hobbies));
+    if (profile.content !== undefined && profile.content.hobbies !== undefined) {
+      setHobbiesString(printHobbiesList(profile.content.hobbies));
     }
-  }, [profileData.content]);
+  }, [profile.content]);
 
   const printHobbiesList = (hobbies) => {
     if (hobbies) {
@@ -29,13 +31,13 @@ function ProfileDataComponent({ profileData, isEditMode, setProfileData, setProf
   }
 
   const handleEditProfileDataDetail = (fieldName, updatedValue) => {
-    const updatedContent = {...profileData.content, [fieldName]: updatedValue};
-    setProfileData({...profileData, content: updatedContent});
+    const updatedContent = {...profile.content, [fieldName]: updatedValue};
+    setProfile({...profile, content: updatedContent});
   }
 
   return (
     <div className='profileData'>
-      {profileData !== undefined && profileData.content !== undefined ?
+      {profile !== undefined && profile.content !== undefined ?
         <List>
 
           {isEditMode ?
@@ -43,13 +45,13 @@ function ProfileDataComponent({ profileData, isEditMode, setProfileData, setProf
               className='editProfileData'
               title="From"
               fieldName="currentHome"
-              dataValue={profileData.content.currentHome}
+              dataValue={profile.content.currentHome}
               icon={HomeOutlined}
               handleEditProfileDataDetail={handleEditProfileDataDetail}
             /> :
             <DisplayProfileDataComponent
               title="From"
-              dataValue={profileData.content.currentHome}
+              dataValue={profile.content.currentHome}
               icon={HomeOutlined}
             />
           }
@@ -58,13 +60,13 @@ function ProfileDataComponent({ profileData, isEditMode, setProfileData, setProf
                 className='editProfileData'
                 title="Profession"
                 fieldName="profession"
-                dataValue={profileData.content.profession}
+                dataValue={profile.content.profession}
                 icon={WorkOutline}
                 handleEditProfileDataDetail={handleEditProfileDataDetail}
               /> :
               <DisplayProfileDataComponent
                 title="Profesion"
-                dataValue={profileData.content.profession}
+                dataValue={profile.content.profession}
                 icon={WorkOutline}
               />}
             {isEditMode ?
