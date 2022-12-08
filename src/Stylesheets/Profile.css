@@ -12,6 +12,49 @@
   margin: 1%;
 }
 
+.profileImage {
+  margin: 2%;
+}
+
+.profileSummary {
+  display: flex;
+  align-items: center;
+  margin-top: 1%;
+  flex-wrap: wrap;
+  padding-bottom: 2%;
+  /* max-width: 50px; */
+}
+
+.profileDataDetails {
+  flex-basis: 100%;
+}
+
+.profileDataListItem {
+  margin: '2%'
+}
+
+.break {
+  flex-basis: 100%;
+}
+
+.profileDataHeader {
+  margin-left: 3%;
+  /* align-self: flex-start; */
+}
+
+.profileButtons {
+  flex-basis: 100%;
+}
+
+.editProfileButton {
+  width: 80%;
+  margin: 2% 10%;
+}
+
+.editProfileData {
+  flex-basis: 100%;
+}
+
 @media (max-width: 800px) {
   .profile {
     flex: 1 1 auto;

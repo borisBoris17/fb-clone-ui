@@ -5,7 +5,7 @@ import config from '../config';
 function AuthorComponent({ author, timestamp }) {
   return (
     <div className='Author'>
-      {author !== undefined && author.content !== undefined ? <><Avatar className='authorImage' src={`${config.api.protocol}://${config.api.host}/images/${author.content.profileImageName}`} />
+      {author !== undefined && author.content !== undefined ? <><Avatar sx={{ border: '1px solid #cccccc' }} className='authorImage' src={`${config.api.protocol}://${config.api.host}/images/${author.content.profileImageName}`} />
         <div>
           <Typography
             sx={{
