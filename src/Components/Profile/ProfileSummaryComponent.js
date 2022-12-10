@@ -17,17 +17,6 @@ function ProfileSummaryComponent({isLoggedInProfile}) {
     setIsEditMode(false);
   }
 
-  const handleAddFriend = async () => {
-    // TODO change to creating a friend request
-    
-  }
-
-  const getLoggendInProfileComponent = () => {
-    return (
-      isEditMode ? <Button className='editProfileButton' onClick={handleSaveProfileChanges}>Save</Button> : <Button className='editProfileButton' onClick={() => setIsEditMode(true)}>Edit Profile</Button>
-    )
-  }
-
   const getFriendProfileComponent = () => {
     return (
       <Button className='editProfileButton' onClick={handleSaveProfileChanges}>Add as Friend</Button>
@@ -63,7 +52,7 @@ function ProfileSummaryComponent({isLoggedInProfile}) {
           </div>
           <div className='break'></div>
           <div className='profileButtons'>
-              {isLoggedInProfile ?  getLoggendInProfileComponent() : getFriendProfileComponent()}
+              {isEditMode ? <Button className='editProfileButton' onClick={handleSaveProfileChanges}>Save</Button> : <Button className='editProfileButton' onClick={() => setIsEditMode(true)}>Edit Profile</Button>}
           </div>
           
         </> : ""}

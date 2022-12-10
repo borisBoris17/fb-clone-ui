@@ -4,13 +4,19 @@ import config from '../../config';
 import axios from 'axios';
 import { Typography, Button } from '@mui/material';
 import FriendDataComponent from './FriendDataComponent';
+import { ProfileContext } from '../../App';
+const util = require('../../Utilities/util');
 
-function FriendSummaryComponent({ isLoggedInProfile, profile }) {
+function FriendSummaryComponent({ profile }) {
   const [numFriends, setNumFriends] = useState(1);
-  const [isEditMode, setIsEditMode] = useState(false);
+  const {profile: loggedInUser} = useContext(ProfileContext);
 
   const handleAddFriend = async () => {
     // TODO change to creating a friend request
+    const addFriendToProfile = util.createRelationObject(profile.node_id, loggedInUser.node_id, 'Friend');
+    const addFriendToLoggedInProfile = util.createRelationObject(loggedInUser.node_id, profile.node_id, 'Friend');
+    await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, addFriendToProfile);
+    await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, addFriendToLoggedInProfile);
   }
 
   return (
