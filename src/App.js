@@ -5,7 +5,7 @@ import './Stylesheets/Feed.css';
 import './Stylesheets/Post.css';
 import './Stylesheets/Profile.css';
 import './Stylesheets/Author.css';
-import { React, useEffect, useState, useContext, createContext } from 'react';
+import { React, useEffect, useState, createContext } from 'react';
 import { Grid } from '@mui/material';
 import ProfileComponent from './Components/Profile/ProfileComponent';
 import AppBarComponent from './Components/App/AppBarComponent';
@@ -21,6 +21,7 @@ import FeedComponent from './Components/Feed/FeedComponent';
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
 import config from './config';
+import FriendComponent from './Components/Friend/FriendComponent';
 
 const util = require('./Utilities/util');
 
@@ -91,7 +92,8 @@ function App() {
               <Grid item lg={10}>
                 <Routes>
                   <Route path="/" element={<FeedComponent profileId={profileId} isLoggedIn={isLoggedIn} />} />
-                  <Route path="/profile" element={<ProfileComponent profileId={profileId} isLoggedIn={isLoggedIn} setProfileId={setProfileId} />} />
+                  <Route path="/profile" element={<ProfileComponent isLoggedIn={isLoggedIn} />} />
+                  <Route path="/friend/:profileId" element={<FriendComponent profileId={profileId} isLoggedIn={isLoggedIn} setProfileId={setProfileId}  />} />
                 </Routes>
               </Grid>
             </Grid>

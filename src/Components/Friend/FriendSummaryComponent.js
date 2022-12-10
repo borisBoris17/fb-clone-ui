@@ -3,35 +3,14 @@ import { React, useContext, useState } from 'react';
 import config from '../../config';
 import axios from 'axios';
 import { Typography, Button } from '@mui/material';
-import ProfileDataComponent from './ProfileDataComponent';
-import { ProfileContext } from '../../App';
+import FriendDataComponent from './FriendDataComponent';
 
-function ProfileSummaryComponent({isLoggedInProfile}) {
+function FriendSummaryComponent({ isLoggedInProfile, profile }) {
   const [numFriends, setNumFriends] = useState(1);
   const [isEditMode, setIsEditMode] = useState(false);
-  const { profile, setProfile } = useContext(ProfileContext);
-
-  const handleSaveProfileChanges = async () => {
-    const updatedProfile = await axios.put(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profile.node_id}`, {content: profile.content});
-    setProfile(updatedProfile.data);
-    setIsEditMode(false);
-  }
 
   const handleAddFriend = async () => {
     // TODO change to creating a friend request
-    
-  }
-
-  const getLoggendInProfileComponent = () => {
-    return (
-      isEditMode ? <Button className='editProfileButton' onClick={handleSaveProfileChanges}>Save</Button> : <Button className='editProfileButton' onClick={() => setIsEditMode(true)}>Edit Profile</Button>
-    )
-  }
-
-  const getFriendProfileComponent = () => {
-    return (
-      <Button className='editProfileButton' onClick={handleSaveProfileChanges}>Add as Friend</Button>
-    )
   }
 
   return (
@@ -59,11 +38,11 @@ function ProfileSummaryComponent({isLoggedInProfile}) {
           </div>
           <div className='break'></div>
           <div className='profileDataDetails'>
-            <ProfileDataComponent isEditMode={isEditMode}/>
+            <FriendDataComponent profile={profile} />
           </div>
           <div className='break'></div>
           <div className='profileButtons'>
-              {isLoggedInProfile ?  getLoggendInProfileComponent() : getFriendProfileComponent()}
+            <Button className='editProfileButton' onClick={handleAddFriend}>Add as Friend</Button>
           </div>
           
         </> : ""}
@@ -71,4 +50,4 @@ function ProfileSummaryComponent({isLoggedInProfile}) {
   )
 }
 
-export default ProfileSummaryComponent;
+export default FriendSummaryComponent;

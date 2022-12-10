@@ -1,33 +1,36 @@
-import { React, useEffect, useState, useContext } from 'react';
+import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import config from '../../config';
 import { Card } from '@mui/material';
 import PostListComponent from '../Shared/PostListComponent';
-import ProfileSummaryComponent from './ProfileSummaryComponent';
-import { ProfileContext } from '../../App';
 import { useParams } from "react-router-dom";
+import FriendSummaryComponent from './FriendSummaryComponent';
 
-function ProfileComponent({ isLoggedIn }) {
+function FriendComponent({ isLoggedIn }) {
   const [posts, setPosts] = useState([]);
-  const { profile } = useContext(ProfileContext);
+  const [profile, setProfile] = useState({});
+  const { profileId } = useParams();
 
   useEffect(() => {
-    if (profile.node_id) {
-      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profile.node_id}/Authored/Post`).then(resp => {
+    if (profileId && profileId !== '') {
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profileId}`).then(resp => {
+        setProfile(resp.data[0]);
+      });
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profileId}/Authored/Post`).then(resp => {
         setPosts(resp.data);
-      })
+      });
     }
-  }, [profile.node_id]);
+  }, []);
 
   return (
     <div className="profileComponent">
       {isLoggedIn !== undefined && isLoggedIn ? <>
         <div className="profile">
-            {posts !== undefined && posts.length > 1 ? <PostListComponent posts={posts} /> : ""}
+            {posts !== undefined && posts.length > 0 ? <PostListComponent posts={posts} /> : ""}
         </div>
         <div className='profileSideComponent'>
           <Card>
-            <ProfileSummaryComponent />
+            <FriendSummaryComponent profile={profile} />
           </Card>
         </div>
       </> : <>
@@ -45,4 +48,4 @@ function ProfileComponent({ isLoggedIn }) {
   );
 }
 
-export default ProfileComponent;
+export default FriendComponent;

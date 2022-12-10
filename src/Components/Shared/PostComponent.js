@@ -9,12 +9,12 @@ import CommentBugComponent from './CommentBugComponent';
 import AddCommentComponent from './AddCommentComponent';
 import { ProfileContext } from '../../App';
 
-function PostComponent({post}) {
+function PostComponent({ post, profile }) {
   const [author, setAuthor] = useState({});
   const [comments, setComments] = useState([]);
   const [likes, setLikes] = useState([]);
   const [showComments, setShowComments] = useState(true);
-  const { profile } = useContext(ProfileContext);
+  // const { profile } = useContext(ProfileContext);
 
   useEffect(() => {
     if (post) {
