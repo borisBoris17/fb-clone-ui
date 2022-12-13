@@ -4,14 +4,14 @@ import config from '../../config';
 import { Button, Typography } from '@mui/material';
 import AuthorComponent from './AuthorComponent';
 import AddCommentComponent from './AddCommentComponent';
-import { ProfileContext } from '../../App';
+import { AppContext } from '../../App';
 
 function CommentComponent({ comment }) {
   const [author, setAuthor] = useState({});
   const [replies, setReplies] = useState([]);
   const [likes, setLikes] = useState([]);
   const [showCommentInput, setShowCommentInput] = useState(false);
-  const { profile } = useContext(ProfileContext);
+  const { profile } = useContext(AppContext);
 
   useEffect(() => {
     if (comment.node_id) {

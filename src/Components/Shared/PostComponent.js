@@ -7,15 +7,15 @@ import AuthorComponent from './AuthorComponent';
 import LikeBugComponent from './LikeBugComponent';
 import CommentBugComponent from './CommentBugComponent';
 import AddCommentComponent from './AddCommentComponent';
-import { ProfileContext } from '../../App';
+import { AppContext } from '../../App';
 const util = require('../../Utilities/util');
 
-function PostComponent({ post, profile }) {
+function PostComponent({ post }) {
   const [author, setAuthor] = useState({});
   const [comments, setComments] = useState([]);
   const [likes, setLikes] = useState([]);
   const [showComments, setShowComments] = useState(true);
-  // const { profile } = useContext(ProfileContext);
+  const { profile } = useContext(AppContext);
 
   useEffect(() => {
     if (post) {

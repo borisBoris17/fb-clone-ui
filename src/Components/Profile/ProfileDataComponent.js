@@ -4,11 +4,11 @@ import { List } from '@mui/material';
 import { WorkOutline, HomeOutlined, DirectionsRunOutlined } from '@mui/icons-material';
 import DisplayProfileDataComponent from './DisplayProfileDataComponent';
 import EditProfileDataComponent from './EditProfileDataComponent';
-import { ProfileContext } from '../../App';
+import { AppContext } from '../../App';
 
 function ProfileDataComponent({ isEditMode }) {
   const [hobbiesString, setHobbiesString] = useState('');
-  const { profile, setProfile } = useContext(ProfileContext);
+  const { profile, setProfile } = useContext(AppContext);
 
   useEffect(() => {
     if (profile.content !== undefined && profile.content.hobbies !== undefined) {

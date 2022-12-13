@@ -4,12 +4,12 @@ import config from '../../config';
 import axios from 'axios';
 import { Typography, Button } from '@mui/material';
 import ProfileDataComponent from './ProfileDataComponent';
-import { ProfileContext } from '../../App';
+import { AppContext } from '../../App';
 
 function ProfileSummaryComponent({isLoggedInProfile}) {
   const [numFriends, setNumFriends] = useState(1);
   const [isEditMode, setIsEditMode] = useState(false);
-  const { profile, setProfile } = useContext(ProfileContext);
+  const { profile, setProfile } = useContext(AppContext);
 
   const handleSaveProfileChanges = async () => {
     const updatedProfile = await axios.put(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profile.node_id}`, {content: profile.content});

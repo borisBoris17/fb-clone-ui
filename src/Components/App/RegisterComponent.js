@@ -1,10 +1,11 @@
-import { React, useState } from 'react';
+import { React, useState, useContext } from 'react';
 import { FormControl, Stack, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
+import { AppContext } from '../../App';
 const config = require('../../config');
 const util = require('../../Utilities/util');
 
@@ -27,6 +28,7 @@ function RegisterComponent({ setIsLoggedIn, handleCloseRegister, openRegisterMen
   const [name, setName] = useState('');
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const { handleOpenSnackbar } = useContext(AppContext);
 
   const handleRegister = () => {
     if (username !== undefined && username !== '') {
@@ -37,6 +39,7 @@ function RegisterComponent({ setIsLoggedIn, handleCloseRegister, openRegisterMen
           setHasError(true);
           setErrorMessage(resp.data);
         } else {
+          handleOpenSnackbar('Registration Successful with Username: ' + resp.data.username);
           setHasError(false);
           setErrorMessage('');
           util.addTokenToStorage(resp.data.token);

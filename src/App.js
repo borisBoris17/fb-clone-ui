@@ -6,7 +6,7 @@ import './Stylesheets/Post.css';
 import './Stylesheets/Profile.css';
 import './Stylesheets/Author.css';
 import { React, useEffect, useState, createContext } from 'react';
-import { Grid } from '@mui/material';
+import { Grid, Snackbar } from '@mui/material';
 import ProfileComponent from './Components/Profile/ProfileComponent';
 import AppBarComponent from './Components/App/AppBarComponent';
 import SideNavigationComponent from './Components/App/SideNavigationComponent'
@@ -31,12 +31,14 @@ const theme = createTheme({
   }
 });
 
-export const ProfileContext = createContext();
+export const AppContext = createContext();
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileId, setProfileId] = useState('');
   const [profile, setProfile] = useState({});
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackBarMessage, setSnackBarMessage] = useState('');
 
   useEffect(() => {
     if (profileId && profileId !== '') {
@@ -78,12 +80,22 @@ function App() {
     setProfileId('');
   }
 
+  const handleOpenSnackbar = (message) => {
+    setSnackBarMessage(message);
+    setOpenSnackbar(true);
+  }
+
+  const handleCloseSnackbar = () => {
+    setSnackBarMessage('');
+    setOpenSnackbar(false);
+  }
+
   return (
     <div className="App">
       <Router>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <ProfileContext.Provider value={{profile, setProfile}} >
+          <AppContext.Provider value={{ profile, setProfile, handleOpenSnackbar }} >
             <AppBarComponent isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} title={"Memory Social"} handleLogOut={handleLogOut} />
             <Grid container spacing={1}>
               <Grid item lg={2}>
@@ -93,11 +105,17 @@ function App() {
                 <Routes>
                   <Route path="/" element={<FeedComponent profileId={profileId} isLoggedIn={isLoggedIn} />} />
                   <Route path="/profile" element={<ProfileComponent isLoggedIn={isLoggedIn} />} />
-                  <Route path="/friend/:profileId" element={<FriendComponent profileId={profileId} isLoggedIn={isLoggedIn} setProfileId={setProfileId}  />} />
+                  <Route path="/friend/:profileId" element={<FriendComponent profileId={profileId} isLoggedIn={isLoggedIn} setProfileId={setProfileId} />} />
                 </Routes>
               </Grid>
             </Grid>
-          </ProfileContext.Provider>
+            <Snackbar
+              open={openSnackbar}
+              autoHideDuration={6000}
+              onClose={handleCloseSnackbar}
+              message={snackBarMessage}
+            />
+          </AppContext.Provider>
         </ThemeProvider>
       </Router>
     </div>

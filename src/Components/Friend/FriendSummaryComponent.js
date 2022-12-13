@@ -4,12 +4,12 @@ import config from '../../config';
 import axios from 'axios';
 import { Typography, Button } from '@mui/material';
 import FriendDataComponent from './FriendDataComponent';
-import { ProfileContext } from '../../App';
+import { AppContext } from '../../App';
 const util = require('../../Utilities/util');
 
 function FriendSummaryComponent({ profile }) {
   const [numFriends, setNumFriends] = useState(1);
-  const {profile: loggedInUser} = useContext(ProfileContext);
+  const {profile: loggedInUser, handleOpenSnackbar} = useContext(AppContext);
 
   const handleAddFriend = async () => {
     // TODO change to creating a friend request
@@ -17,6 +17,7 @@ function FriendSummaryComponent({ profile }) {
     const addFriendToLoggedInProfile = util.createRelationObject(loggedInUser.node_id, profile.node_id, 'Friend');
     await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, addFriendToProfile);
     await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/`, addFriendToLoggedInProfile);
+    handleOpenSnackbar('Friend Added!')
   }
 
   return (

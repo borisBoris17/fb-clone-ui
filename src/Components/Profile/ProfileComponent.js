@@ -4,12 +4,12 @@ import config from '../../config';
 import { Card } from '@mui/material';
 import PostListComponent from '../Shared/PostListComponent';
 import ProfileSummaryComponent from './ProfileSummaryComponent';
-import { ProfileContext } from '../../App';
+import { AppContext } from '../../App';
 import { useParams } from "react-router-dom";
 
 function ProfileComponent({ isLoggedIn }) {
   const [posts, setPosts] = useState([]);
-  const { profile } = useContext(ProfileContext);
+  const { profile } = useContext(AppContext);
 
   useEffect(() => {
     if (profile.node_id) {
