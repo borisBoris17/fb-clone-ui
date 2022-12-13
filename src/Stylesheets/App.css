@@ -24,3 +24,9 @@ html,body {
 .loginError {
   color: #FF7377;
 }
+
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
