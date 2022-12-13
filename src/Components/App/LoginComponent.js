@@ -1,10 +1,11 @@
-import { React, useState } from 'react';
+import { React, useContext, useState } from 'react';
 import { FormControl, Stack, Button, Grid } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
+import { AppContext } from '../../App';
 const config = require('../../config');
 const util = require('../../Utilities/util');
 
@@ -25,12 +26,14 @@ function LoginComponent({ setIsLoggedIn, handleCloseLogin, openLoginMenu, handle
   const [password, setPassword] = useState('');
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const { handleOpenSnackbar } = useContext(AppContext);
 
   const handleLogin = () => {
     if (username !== undefined && username !== '') {
       axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/account/login`, {
         username: username.toLowerCase(), password: password
       }).then(resp => {
+        handleOpenSnackbar('Login Successful');
         setHasError(false);
         setErrorMessage('');
         util.addTokenToStorage(resp.data.token);

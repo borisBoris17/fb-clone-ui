@@ -4,11 +4,11 @@ import config from '../../config';
 import { Card } from '@mui/material';
 import AddCommentComponent from '../Shared/AddCommentComponent';
 import PostListComponent from '../Shared/PostListComponent';
-import { ProfileContext } from '../../App';
+import { AppContext } from '../../App';
 
 function FeedComponent({ profileId, isLoggedIn }) {
   const [posts, setPosts] = useState([]);
-  const { profile } = useContext(ProfileContext);
+  const { profile, handleOpenSnackbar } = useContext(AppContext);
 
   useEffect(() => {
     if (profileId && profileId !== '') {
@@ -36,6 +36,7 @@ function FeedComponent({ profileId, isLoggedIn }) {
         'Content-Type': 'multipart/form-data'
       }
     }).then(resp => {
+      handleOpenSnackbar('Thanks for Sharing');
       axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/feed/${profileId}`).then(resp => {
         setPosts(resp.data)
       });
@@ -69,7 +70,7 @@ function FeedComponent({ profileId, isLoggedIn }) {
             <Card className="postsCard">
                 {profile.content !== undefined ? <AddCommentComponent placeholder={`What is on your mind, ${profile.content.name}?`} buttonLabel="Post" handlePostComment={handleCreateNewPost} /> : ''}
             </Card>
-            {posts !== undefined && posts.length > 1 ? <PostListComponent posts={posts} /> : ""}
+            {posts !== undefined && posts.length > 0 ? <PostListComponent posts={posts} /> : ""}
           </div>
         </div>
         <div className="FeedSideComponent">

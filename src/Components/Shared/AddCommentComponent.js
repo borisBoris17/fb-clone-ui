@@ -2,12 +2,12 @@ import { React, useState, useContext } from 'react';
 import { Button, TextField, Avatar, IconButton } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import config from '../../config';
-import { ProfileContext } from '../../App';
+import { AppContext } from '../../App';
 
 function AddCommentComponent({ placeholder, handlePostComment, buttonLabel }) {
   const [postText, setPostText] = useState('');
   const [files, setFiles] = useState([]);
-  const { profile } = useContext(ProfileContext);
+  const { profile } = useContext(AppContext);
 
   const handlePostTextChange = (event) => {
     setPostText(event.target.value);

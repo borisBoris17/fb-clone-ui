@@ -22,3 +22,12 @@ const getMillisForNumOfMinutes = (numOfMinutes) => {
 export const logout = () => {
   localStorage.removeItem('token');
 }
+
+export const createRelationObject = (sourceId, destId, type) => {
+  return {
+    source_id: sourceId,
+    dest_id: destId,
+    relation_type: type,
+    content: null
+  }
+}
