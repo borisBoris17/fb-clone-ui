@@ -5,7 +5,7 @@ import './Stylesheets/Feed.css';
 import './Stylesheets/Post.css';
 import './Stylesheets/Profile.css';
 import './Stylesheets/Author.css';
-import { React, useEffect, useState, createContext } from 'react';
+import { React, useEffect, useState, createContext, useContext } from 'react';
 import { Grid, Snackbar } from '@mui/material';
 import ProfileComponent from './Components/Profile/ProfileComponent';
 import AppBarComponent from './Components/App/AppBarComponent';
@@ -39,6 +39,7 @@ function App() {
   const [profile, setProfile] = useState({});
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (profileId && profileId !== '') {
@@ -95,7 +96,7 @@ function App() {
       <Router>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <AppContext.Provider value={{ profile, setProfile, handleOpenSnackbar }} >
+          <AppContext.Provider value={{ profile, setProfile, handleOpenSnackbar, isLoading, setIsLoading }} >
             <AppBarComponent isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} title={"Memory Social"} handleLogOut={handleLogOut} />
             <Grid container spacing={1}>
               <Grid item lg={2}>

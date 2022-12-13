@@ -5,20 +5,24 @@ import { Card } from '@mui/material';
 import AddCommentComponent from '../Shared/AddCommentComponent';
 import PostListComponent from '../Shared/PostListComponent';
 import { AppContext } from '../../App';
+import LoadingPostComponent from '../Shared/LoadingPostComponent';
 
 function FeedComponent({ profileId, isLoggedIn }) {
   const [posts, setPosts] = useState([]);
-  const { profile, handleOpenSnackbar } = useContext(AppContext);
+  const { profile, handleOpenSnackbar, isLoading, setIsLoading } = useContext(AppContext);
 
   useEffect(() => {
     if (profileId && profileId !== '') {
+      setIsLoading(true);
       axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/feed/${profileId}`).then(resp => {
         setPosts(resp.data)
+        setIsLoading(false);
       });
     }
   }, [profileId]);
 
   const handleCreateNewPost = async (postText, files) => {
+    setIsLoading(true);
     const post = createPostObject(postText);
     const savedPost = await axios.post(`${config.api.protocol}://${config.api.host}/memory-social-api/node/`, post);
     const authoredRelation = createRelationObject(profile.node_id, savedPost.data.node_id, 'Authored');
@@ -39,6 +43,7 @@ function FeedComponent({ profileId, isLoggedIn }) {
       handleOpenSnackbar('Thanks for Sharing');
       axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/feed/${profileId}`).then(resp => {
         setPosts(resp.data)
+        setIsLoading(false);
       });
     })
   }
@@ -70,6 +75,7 @@ function FeedComponent({ profileId, isLoggedIn }) {
             <Card className="postsCard">
                 {profile.content !== undefined ? <AddCommentComponent placeholder={`What is on your mind, ${profile.content.name}?`} buttonLabel="Post" handlePostComment={handleCreateNewPost} /> : ''}
             </Card>
+            {isLoading ? <Card key="-1" className="postsCard"><LoadingPostComponent /></Card> : ""}
             {posts !== undefined && posts.length > 0 ? <PostListComponent posts={posts} /> : ""}
           </div>
         </div>
