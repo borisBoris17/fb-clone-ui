@@ -55,6 +55,18 @@
   flex-basis: 100%;
 }
 
+.editHobbyData {
+  flex-basis: 100%;
+}
+
+.hobbyTextField {
+  width: 100%;
+}
+
+.hobbyTextFieldInput {
+  margin: 10px 0px;
+}
+
 @media (max-width: 800px) {
   .profile {
     flex: 1 1 auto;
