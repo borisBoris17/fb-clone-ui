@@ -7,7 +7,7 @@
   margin: 1% 10%;
 }
 
-.FeedSideComponent {
+.feedSideComponent {
   flex: 0 0 25%;
   margin: 1%;
 }
@@ -22,6 +22,15 @@
 
 .missingProfileMessageDiv {
   margin: 2%;
+}
+
+.searchProfile {
+  margin: 10px;
+}
+
+.searchBar {
+  width: 100%;
+  padding-left: 100px;
 }
 
 @media (max-width: 800px) {

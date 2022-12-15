@@ -6,6 +6,7 @@ import AddCommentComponent from '../Shared/AddCommentComponent';
 import PostListComponent from '../Shared/PostListComponent';
 import { AppContext } from '../../App';
 import LoadingPostComponent from '../Shared/LoadingPostComponent';
+import SearchProfilesComponent from './SearchProfilesComponent';
 
 function FeedComponent({ profileId, isLoggedIn }) {
   const [posts, setPosts] = useState([]);
@@ -73,28 +74,28 @@ function FeedComponent({ profileId, isLoggedIn }) {
         <div className="feed">
           <div>
             <Card className="postsCard">
-                {profile.content !== undefined ? <AddCommentComponent placeholder={`What is on your mind, ${profile.content.name}?`} buttonLabel="Post" handlePostComment={handleCreateNewPost} /> : ''}
+              {profile.content !== undefined ? <AddCommentComponent placeholder={`What is on your mind, ${profile.content.name}?`} buttonLabel="Post" handlePostComment={handleCreateNewPost} /> : ''}
             </Card>
             {isLoading ? <Card key="-1" className="postsCard"><LoadingPostComponent /></Card> : ""}
             {posts !== undefined && posts.length > 0 ? <PostListComponent posts={posts} /> : ""}
           </div>
         </div>
-        <div className="FeedSideComponent">
-        <Card>
-        a
-        </Card>
-      </div> </> : <>
+        <div className="feedSideComponent">
+          <Card>
+            <SearchProfilesComponent />
+          </Card>
+        </div> </> : <>
         <div className="feed">
-            <Card className="postsCard">
-              <div className="missingProfileMessageDiv">No profile loaded, make sure you are logged in...</div>
-            </Card>
+          <Card className="postsCard">
+            <div className="missingProfileMessageDiv">No profile loaded, make sure you are logged in...</div>
+          </Card>
         </div>
-        
+
         <div className="FeedSideComponent">
-        <Card>
-          asdfe
-        </Card>
-      </div> </>}
+          <Card>
+            
+          </Card>
+        </div> </>}
     </div>
   );
 }
