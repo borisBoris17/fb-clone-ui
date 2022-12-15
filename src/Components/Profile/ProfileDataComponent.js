@@ -74,7 +74,7 @@ function ProfileDataComponent({ isEditMode }) {
                 className='editProfileData'
                 title="Hobbies"
                 fieldName="hobbies"
-                dataValue={hobbiesString}
+                dataValue={profile.content.hobbies}
                 icon={DirectionsRunOutlined}
                 handleEditProfileDataDetail={handleEditProfileDataDetail}
               /> :
