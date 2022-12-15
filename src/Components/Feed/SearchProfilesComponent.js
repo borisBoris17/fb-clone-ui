@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import { Box, TextField, List, ListItem, ListItemButton, ListItemText, ListItemIcon } from '@mui/material';
-import {Search, AccountBox} from '@mui/icons-material';
+import { Search, AccountBox } from '@mui/icons-material';
 import axios from 'axios';
 import config from '../../config';
 
@@ -46,7 +46,9 @@ const SearchProfilesComponent = () => {
             </ListItemButton>
           </ListItem>
         )}
-      </List> : ""}
+      </List> : keyword !== '' ? <ListItem variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <ListItemText primary={`No profiles found matching ${keyword}`} />
+      </ListItem> : ""}
     </div>
   )
 }
