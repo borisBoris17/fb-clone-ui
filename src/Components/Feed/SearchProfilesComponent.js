@@ -12,9 +12,10 @@ const SearchProfilesComponent = () => {
   useEffect(() => {
     if (keyword !== undefined && keyword !== '') {
       axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/search/${keyword}`).then(resp => {
-        console.log(resp.data)
         setProfiles(resp.data);
       });
+    } else {
+      setProfiles([]);
     }
   }, [keyword]);
 
