@@ -6,7 +6,7 @@ import PostListComponent from '../Shared/PostListComponent';
 import { useParams } from "react-router-dom";
 import FriendSummaryComponent from './FriendSummaryComponent';
 
-function FriendComponent({ isLoggedIn }) {
+function FriendComponent({ isLoggedIn, isFriendRequest }) {
   const [posts, setPosts] = useState([]);
   const [profile, setProfile] = useState({});
   const { profileId } = useParams();
@@ -14,13 +14,13 @@ function FriendComponent({ isLoggedIn }) {
   useEffect(() => {
     if (profileId && profileId !== '') {
       axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profileId}`).then(resp => {
-        setProfile(resp.data[0]);
+        setProfile(resp.data);
       });
       axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profileId}/Authored/Post`).then(resp => {
         setPosts(resp.data);
       });
     }
-  }, []);
+  }, [profileId]);
 
   return (
     <div className="profileComponent">
@@ -30,7 +30,7 @@ function FriendComponent({ isLoggedIn }) {
         </div>
         <div className='profileSideComponent'>
           <Card>
-            <FriendSummaryComponent profile={profile} />
+            <FriendSummaryComponent profile={profile} isFriendRequest={isFriendRequest} />
           </Card>
         </div>
       </> : <>
