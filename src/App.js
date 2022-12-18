@@ -5,7 +5,7 @@ import './Stylesheets/Feed.css';
 import './Stylesheets/Post.css';
 import './Stylesheets/Profile.css';
 import './Stylesheets/Author.css';
-import { React, useEffect, useState, createContext, useContext } from 'react';
+import { React, useEffect, useState, createContext } from 'react';
 import { Grid, Snackbar } from '@mui/material';
 import ProfileComponent from './Components/Profile/ProfileComponent';
 import AppBarComponent from './Components/App/AppBarComponent';
@@ -44,7 +44,7 @@ function App() {
   useEffect(() => {
     if (profileId && profileId !== '') {
       axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profileId}`).then(resp => {
-        setProfile(resp.data[0]);
+        setProfile(resp.data);
       });
     }
   }, [profileId]);
@@ -106,7 +106,8 @@ function App() {
                 <Routes>
                   <Route path="/" element={<FeedComponent profileId={profileId} isLoggedIn={isLoggedIn} />} />
                   <Route path="/profile" element={<ProfileComponent isLoggedIn={isLoggedIn} />} />
-                  <Route path="/friend/:profileId" element={<FriendComponent profileId={profileId} isLoggedIn={isLoggedIn} setProfileId={setProfileId} />} />
+                  <Route path="/friend/:profileId" element={<FriendComponent profileId={profileId} isLoggedIn={isLoggedIn} setProfileId={setProfileId} isFriendRequest={false} />} />
+                  <Route path="/friendRequest/:profileId" element={<FriendComponent profileId={profileId} isLoggedIn={isLoggedIn} setProfileId={setProfileId} isFriendRequest={true} />} />
                 </Routes>
               </Grid>
             </Grid>
