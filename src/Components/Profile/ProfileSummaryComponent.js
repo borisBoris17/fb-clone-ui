@@ -1,5 +1,5 @@
 import { Avatar } from '@mui/material';
-import { React, useContext, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import config from '../../config';
 import axios from 'axios';
 import { Typography, Button } from '@mui/material';
@@ -10,6 +10,16 @@ function ProfileSummaryComponent({isLoggedInProfile}) {
   const [numFriends, setNumFriends] = useState(1);
   const [isEditMode, setIsEditMode] = useState(false);
   const { profile, setProfile } = useContext(AppContext);
+
+  useEffect(() => {
+    if (profile.node_id !== undefined) {
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/${profile.node_id}/Friend`).then(resp => {
+        if (resp.data !== undefined && resp.data !== "") {
+          setNumFriends(resp.data.length);
+        }
+      });
+    }
+  }, [profile.node_id])
 
   const handleSaveProfileChanges = async () => {
     const updatedProfile = await axios.put(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profile.node_id}`, {content: profile.content});

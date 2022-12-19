@@ -17,7 +17,7 @@ function AuthorComponent({ author, timestamp }) {
                 textAlign: "left",
                 color: "#555555",
                 fontSize: "12px"
-              }}>{new Date(timestamp).toUTCString()}</Typography>
+              }}>{new Date(timestamp).toLocaleString()}</Typography>
           </Link>
         </div></> : ""}
     </div>
