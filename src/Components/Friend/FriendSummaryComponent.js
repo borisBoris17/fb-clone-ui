@@ -1,15 +1,32 @@
 import { Avatar } from '@mui/material';
-import { React, useContext, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import config from '../../config';
 import axios from 'axios';
 import { Typography, Button } from '@mui/material';
 import FriendDataComponent from './FriendDataComponent';
 import { AppContext } from '../../App';
+import { RestorePage } from '@mui/icons-material';
 const util = require('../../Utilities/util');
 
-function FriendSummaryComponent({ profile, isFriendRequest }) {
+function FriendSummaryComponent({ profile }) {
   const [numFriends, setNumFriends] = useState(1);
-  const {profile: loggedInUser, handleOpenSnackbar} = useContext(AppContext);
+  const [shouldConfirmRequest, setShouldConfirmRequest] = useState(false);
+  const [canAddFriend, setCanAddFriend] = useState(true);
+  const { profile: loggedInUser, handleOpenSnackbar } = useContext(AppContext);
+
+  useEffect(() => {
+    if (profile.node_id && loggedInUser.node_id) {
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/getFriendRequest/${profile.node_id}/${loggedInUser.node_id}`).then(resp => {
+        const foundFriendRequest = resp.data;
+        if (foundFriendRequest !== undefined && foundFriendRequest !== "") {
+          if ((foundFriendRequest.content === undefined || foundFriendRequest.content === null) || (foundFriendRequest.content !== undefined && foundFriendRequest.content !== null && foundFriendRequest.content.isProcessed !== true)) { 
+            setShouldConfirmRequest(true);
+          }
+          setCanAddFriend(false);
+        }
+      });
+    }
+  }, [profile.node_id, loggedInUser.node_id]);
 
   const handleSendFriendRequest = async () => {
     const friendRequestRelation = util.createRelationObject(loggedInUser.node_id, profile.node_id, 'Friend_request');
@@ -60,7 +77,8 @@ function FriendSummaryComponent({ profile, isFriendRequest }) {
           </div>
           <div className='break'></div>
           <div className='profileButtons'>
-            {isFriendRequest !== undefined && isFriendRequest ?  <Button className='editProfileButton' onClick={handleConfirmFriend}>Confirm Friend</Button> : <Button className='editProfileButton' onClick={handleSendFriendRequest}>Send Friend Request</Button> }
+            {shouldConfirmRequest !== undefined && shouldConfirmRequest ? <Button className='editProfileButton' onClick={handleConfirmFriend}>Confirm Friend</Button> : ""}
+            {canAddFriend ? <Button className='editProfileButton' onClick={handleSendFriendRequest}>Send Friend Request</Button> : ""}
           </div>
         </> : ""}
     </div>
