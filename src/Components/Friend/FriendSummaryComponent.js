@@ -10,19 +10,37 @@ const util = require('../../Utilities/util');
 
 function FriendSummaryComponent({ profile }) {
   const [numFriends, setNumFriends] = useState(1);
+  const [isFriend, setIsFriend] = useState(false);
   const [shouldConfirmRequest, setShouldConfirmRequest] = useState(false);
-  const [canAddFriend, setCanAddFriend] = useState(true);
+  const [canAddFriend, setCanAddFriend] = useState(false);
   const { profile: loggedInUser, handleOpenSnackbar } = useContext(AppContext);
 
   useEffect(() => {
     if (profile.node_id && loggedInUser.node_id) {
-      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/getFriendRequest/${profile.node_id}/${loggedInUser.node_id}`).then(resp => {
-        const foundFriendRequest = resp.data;
-        if (foundFriendRequest !== undefined && foundFriendRequest !== "") {
-          if ((foundFriendRequest.content === undefined || foundFriendRequest.content === null) || (foundFriendRequest.content !== undefined && foundFriendRequest.content !== null && foundFriendRequest.content.isProcessed !== true)) { 
-            setShouldConfirmRequest(true);
+      if (profile.node_id === loggedInUser.node_id) {
+        setCanAddFriend(false);
+        setIsFriend(true);
+      } else {
+        axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/getFriendRequest/${profile.node_id}/${loggedInUser.node_id}`).then(resp => {
+          const foundFriendRequest = resp.data;
+          if (foundFriendRequest !== undefined && foundFriendRequest !== "") {
+            if ((foundFriendRequest.content === undefined || foundFriendRequest.content === null) || (foundFriendRequest.content !== undefined && foundFriendRequest.content !== null && foundFriendRequest.content.isProcessed !== true)) {
+              setShouldConfirmRequest(true);
+            }
+          } else {
+            setCanAddFriend(true);
           }
-          setCanAddFriend(false);
+        });
+        axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/getFriend/${loggedInUser.node_id}/${profile.node_id}`).then(resp => {
+          console.log(resp.data);
+          if (resp.data !== undefined && resp.data !== "") {
+            setIsFriend(true);
+          }
+        });
+      }
+      axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/relation/${profile.node_id}/Friend`).then(resp => {
+        if (resp.data !== undefined && resp.data !== "") {
+          setNumFriends(resp.data.length);
         }
       });
     }
@@ -77,8 +95,8 @@ function FriendSummaryComponent({ profile }) {
           </div>
           <div className='break'></div>
           <div className='profileButtons'>
-            {shouldConfirmRequest !== undefined && shouldConfirmRequest ? <Button className='editProfileButton' onClick={handleConfirmFriend}>Confirm Friend</Button> : ""}
-            {canAddFriend ? <Button className='editProfileButton' onClick={handleSendFriendRequest}>Send Friend Request</Button> : ""}
+            {shouldConfirmRequest ? <Button className='editProfileButton' onClick={handleConfirmFriend}>Confirm Friend</Button> : ""}
+            {canAddFriend && !isFriend ? <Button className='editProfileButton' onClick={handleSendFriendRequest}>Send Friend Request</Button> : ""}
           </div>
         </> : ""}
     </div>
