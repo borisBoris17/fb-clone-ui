@@ -1,15 +1,18 @@
-import { Avatar } from '@mui/material';
+import { Avatar, IconButton } from '@mui/material';
 import { React, useContext, useEffect, useState } from 'react';
 import config from '../../config';
 import axios from 'axios';
 import { Typography, Button } from '@mui/material';
 import ProfileDataComponent from './ProfileDataComponent';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { AppContext } from '../../App';
+import UpdateProfileImageComponent from './UpdateProfileImageComponent';
 
-function ProfileSummaryComponent({isLoggedInProfile}) {
+function ProfileSummaryComponent({ isLoggedInProfile }) {
   const [numFriends, setNumFriends] = useState(1);
   const [isEditMode, setIsEditMode] = useState(false);
-  const { profile, setProfile } = useContext(AppContext);
+  const [openUpdateProfileImageMenu, setOpenUpdateProfileImageMenu] = useState(false);
+  const { profile, setProfile, handleOpenSnackbar } = useContext(AppContext);
 
   useEffect(() => {
     if (profile.node_id !== undefined) {
@@ -22,22 +25,24 @@ function ProfileSummaryComponent({isLoggedInProfile}) {
   }, [profile.node_id])
 
   const handleSaveProfileChanges = async () => {
-    const updatedProfile = await axios.put(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profile.node_id}`, {content: profile.content});
+    const updatedProfile = await axios.put(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profile.node_id}`, { content: profile.content });
     setProfile(updatedProfile.data);
     setIsEditMode(false);
   }
 
-  const getFriendProfileComponent = () => {
-    return (
-      <Button className='editProfileButton' onClick={handleSaveProfileChanges}>Add as Friend</Button>
-    )
+  const handleOpenUpdateProfileImageMenu = () => setOpenUpdateProfileImageMenu(true);
+  const handleCloseUpdateProfileImageMenu = () => {
+    setOpenUpdateProfileImageMenu(false);
+    axios.get(`${config.api.protocol}://${config.api.host}/memory-social-api/node/${profile.node_id}`).then(resp => {
+      setProfile(resp.data);
+    });
   }
 
   return (
     <div className='profileSummary'>
       {profile !== undefined && profile.content !== undefined ?
         <>
-          <Avatar sx={{ border: '2px solid #cccccc', width: '25%', height: '25%' }} className='profileImage' src={`${config.api.protocol}://${config.api.host}/images/${profile.content.profileImageName}`} />
+          <Avatar sx={{ border: '2px solid #cccccc', width: '25%', height: '25%' }} className='profileImage' src={profile.content !== undefined ? `${config.api.protocol}://${config.api.host}/images/${profile.node_id}/profile/${profile.content.profileImageName}` : ''} />
           <div className='profileDataHeader'>
             <Typography
               sx={{
@@ -55,16 +60,18 @@ function ProfileSummaryComponent({isLoggedInProfile}) {
                 textAlign: "left"
               }}>{numFriends} Friends
             </Typography>
+            {isEditMode ? "" : <Button onClick={handleOpenUpdateProfileImageMenu}>Update Profile Image</Button>}
+            <UpdateProfileImageComponent openUpdateProfileImageMenu={openUpdateProfileImageMenu} handleOpenUpdateProfileImageMenu={handleOpenUpdateProfileImageMenu} handleCloseUpdateProfileImageMenu={handleCloseUpdateProfileImageMenu} />
           </div>
           <div className='break'></div>
           <div className='profileDataDetails'>
-            <ProfileDataComponent isEditMode={isEditMode}/>
+            <ProfileDataComponent isEditMode={isEditMode} />
           </div>
           <div className='break'></div>
           <div className='profileButtons'>
-              {isEditMode ? <Button className='editProfileButton' onClick={handleSaveProfileChanges}>Save</Button> : <Button className='editProfileButton' onClick={() => setIsEditMode(true)}>Edit Profile</Button>}
+            {isEditMode ? <Button className='editProfileButton' onClick={handleSaveProfileChanges}>Save</Button> : <Button className='editProfileButton' onClick={() => setIsEditMode(true)}>Edit Profile</Button>}
           </div>
-          
+
         </> : ""}
     </div>
   )
