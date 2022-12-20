@@ -26,8 +26,8 @@ function AddCommentComponent({ placeholder, handlePostComment, buttonLabel }) {
   return (
     <div className='addComment'>
       <div className='addComment__top'>
-        <Avatar
-          src={profile.content !== undefined ? `${config.api.protocol}://${config.api.host}/images/${profile.content.profileImageName}` : ''}
+        <Avatar sx={{ border: '1px solid #cccccc' }}
+          src={profile.content !== undefined ? `${config.api.protocol}://${config.api.host}/images/${profile.node_id}/profile/${profile.content.profileImageName}` : ''}
         />
         <TextField
           className='commentTextField'
