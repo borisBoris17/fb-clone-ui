@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import { Box, TextField, List, ListItem, ListItemButton, ListItemText, ListItemIcon } from '@mui/material';
+import { TextField, List, ListItem, ListItemButton, ListItemText, ListItemIcon } from '@mui/material';
 import { Search, AccountBox } from '@mui/icons-material';
 import axios from 'axios';
 import config from '../../config';

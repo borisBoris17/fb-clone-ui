@@ -20,7 +20,7 @@ function FeedComponent({ profileId, isLoggedIn }) {
         setIsLoading(false);
       });
     }
-  }, [profileId]);
+  }, [profileId, setIsLoading]);
 
   const handleCreateNewPost = async (postText, files) => {
     setIsLoading(true);

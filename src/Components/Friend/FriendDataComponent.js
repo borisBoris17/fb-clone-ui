@@ -1,5 +1,4 @@
-import { React, useEffect, useState, useContext } from 'react';
-// import config from '../config';
+import { React, useEffect, useState } from 'react';
 import { List } from '@mui/material';
 import { WorkOutline, HomeOutlined, DirectionsRunOutlined } from '@mui/icons-material';
 import DisplayProfileDataComponent from '../Profile/DisplayProfileDataComponent';

@@ -5,7 +5,6 @@ import axios from 'axios';
 import { Typography, Button } from '@mui/material';
 import FriendDataComponent from './FriendDataComponent';
 import { AppContext } from '../../App';
-import { RestorePage } from '@mui/icons-material';
 const util = require('../../Utilities/util');
 
 function FriendSummaryComponent({ profile }) {
@@ -70,7 +69,7 @@ function FriendSummaryComponent({ profile }) {
     <div className='profileSummary'>
       {profile !== undefined && profile.content !== undefined ?
         <>
-          <Avatar sx={{ border: '2px solid #cccccc', width: '25%', height: '25%' }} className='profileImage' src={`${config.api.protocol}://${config.api.host}/images/${profile.content.profileImageName}`} />
+          <Avatar sx={{ border: '2px solid #cccccc', width: '130px', height: '130px' }} className='profileImage' src={`${config.api.protocol}://${config.api.host}/images/${profile.node_id}/profile/${profile.content.profileImageName}`} />
           <div className='profileDataHeader'>
             <Typography
               sx={{

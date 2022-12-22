@@ -1,18 +1,17 @@
-import { Avatar, IconButton } from '@mui/material';
+import { Avatar } from '@mui/material';
 import { React, useContext, useEffect, useState } from 'react';
 import config from '../../config';
 import axios from 'axios';
 import { Typography, Button } from '@mui/material';
 import ProfileDataComponent from './ProfileDataComponent';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { AppContext } from '../../App';
 import UpdateProfileImageComponent from './UpdateProfileImageComponent';
 
-function ProfileSummaryComponent({ isLoggedInProfile }) {
+function ProfileSummaryComponent() {
   const [numFriends, setNumFriends] = useState(1);
   const [isEditMode, setIsEditMode] = useState(false);
   const [openUpdateProfileImageMenu, setOpenUpdateProfileImageMenu] = useState(false);
-  const { profile, setProfile, handleOpenSnackbar } = useContext(AppContext);
+  const { profile, setProfile } = useContext(AppContext);
 
   useEffect(() => {
     if (profile.node_id !== undefined) {
@@ -42,7 +41,7 @@ function ProfileSummaryComponent({ isLoggedInProfile }) {
     <div className='profileSummary'>
       {profile !== undefined && profile.content !== undefined ?
         <>
-          <Avatar sx={{ border: '2px solid #cccccc', width: '100px', height: '100px' }} className='profileImage' src={profile.content !== undefined ? `${config.api.protocol}://${config.api.host}/images/${profile.node_id}/profile/${profile.content.profileImageName}` : ''} />
+          <Avatar sx={{ border: '2px solid #cccccc', width: '150px', height: '150px' }} className='profileImage' src={profile.content !== undefined ? `${config.api.protocol}://${config.api.host}/images/${profile.node_id}/profile/${profile.content.profileImageName}` : ''} />
           <div className='profileDataHeader'>
             <Typography
               sx={{

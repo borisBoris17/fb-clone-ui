@@ -5,7 +5,6 @@ import { Card } from '@mui/material';
 import PostListComponent from '../Shared/PostListComponent';
 import ProfileSummaryComponent from './ProfileSummaryComponent';
 import { AppContext } from '../../App';
-import { useParams } from "react-router-dom";
 import LoadingPostComponent from '../Shared/LoadingPostComponent';
 
 function ProfileComponent({ isLoggedIn }) {
@@ -20,7 +19,7 @@ function ProfileComponent({ isLoggedIn }) {
         setIsLoading(false);
       })
     }
-  }, [profile.node_id]);
+  }, [profile.node_id, setIsLoading]);
 
   return (
     <div className="profileComponent">
