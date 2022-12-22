@@ -1,12 +1,11 @@
 import { React, useContext, useState, useRef } from 'react';
-import { Button, IconButton, Typography, Stack } from '@mui/material';
+import { Button, Typography, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
 import { AppContext } from '../../App';
 const config = require('../../config');
-const util = require('../../Utilities/util');
 
 const modalStyle = {
   position: 'absolute',
@@ -34,7 +33,7 @@ function UpdateProfileImageComponent({ openUpdateProfileImageMenu, handleOpenUpd
   }
 
   const handleProfileImageUpload = (event) => {
-    if (file != undefined) {
+    if (file !== undefined) {
       var formData = new FormData();
       formData.append("profileImageUpdate", true);
       formData.append("profileId", profile.node_id);

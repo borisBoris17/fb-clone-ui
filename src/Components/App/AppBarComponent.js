@@ -1,20 +1,12 @@
-import { React, useState } from 'react';
+import { React } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import LoginComponent from './LoginComponent';
-import RegisterComponent from './RegisterComponent';
+import { useNavigate } from 'react-router-dom';
 
-function AppBarComponent({ title, isLoggedIn, setIsLoggedIn, handleLogOut }) {
-  const [openLoginMenu, setOpenLoginMenu] = useState(false);
-  const [openRegisterMenu, setOpenRegisterMenu] = useState(false);
-
-  const handleOpenLogin = () => setOpenLoginMenu(true);
-  const handleCloseLogin = () => setOpenLoginMenu(false);
-
-  const handleOpenRegister = () => setOpenRegisterMenu(true);
-  const handleCloseRegister = () => setOpenRegisterMenu(false);
+function AppBarComponent({ title, isLoggedIn, handleLogOut }) {
+  const navigate = useNavigate();
 
   return (
     <div className="AppBarContainer">
@@ -23,9 +15,7 @@ function AppBarComponent({ title, isLoggedIn, setIsLoggedIn, handleLogOut }) {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           {title}
         </Typography>
-        {isLoggedIn === true ? <Button color="inherit" onClick={handleLogOut}>Log Out</Button> : <><Button color="inherit" onClick={handleOpenLogin}>Login</Button>
-          <LoginComponent openLoginMenu={openLoginMenu} handleCloseLogin={handleCloseLogin} setIsLoggedIn={setIsLoggedIn} handleOpenRegister={handleOpenRegister}/>
-          <RegisterComponent openRegisterMenu={openRegisterMenu} handleCloseRegister={handleCloseRegister} setIsLoggedIn={setIsLoggedIn} /></>}
+        {isLoggedIn === true ? <Button color="inherit" onClick={handleLogOut}>Log Out</Button> : <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>}
       </Toolbar>
     </AppBar>
     </div>
