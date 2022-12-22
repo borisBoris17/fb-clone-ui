@@ -22,6 +22,7 @@ import jwt_decode from "jwt-decode";
 import axios from 'axios';
 import config from './config';
 import FriendComponent from './Components/Friend/FriendComponent';
+import LoginPageComponent from './Components/App/LoginPageComponent';
 
 const util = require('./Utilities/util');
 
@@ -108,6 +109,7 @@ function App() {
                   <Route path="/profile" element={<ProfileComponent isLoggedIn={isLoggedIn} />} />
                   <Route path="/friend/:profileId" element={<FriendComponent profileId={profileId} isLoggedIn={isLoggedIn} setProfileId={setProfileId} isFriendRequest={false} />} />
                   <Route path="/friendRequest/:profileId" element={<FriendComponent profileId={profileId} isLoggedIn={isLoggedIn} setProfileId={setProfileId} isFriendRequest={true} />} />
+                  <Route path="/login" element={<LoginPageComponent setIsLoggedIn={setIsLoggedIn} handleLogOut={handleLogOut}/>} />
                 </Routes>
               </Grid>
             </Grid>

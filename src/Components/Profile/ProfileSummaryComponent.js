@@ -42,7 +42,7 @@ function ProfileSummaryComponent({ isLoggedInProfile }) {
     <div className='profileSummary'>
       {profile !== undefined && profile.content !== undefined ?
         <>
-          <Avatar sx={{ border: '2px solid #cccccc', width: '25%', height: '25%' }} className='profileImage' src={profile.content !== undefined ? `${config.api.protocol}://${config.api.host}/images/${profile.node_id}/profile/${profile.content.profileImageName}` : ''} />
+          <Avatar sx={{ border: '2px solid #cccccc', width: '100px', height: '100px' }} className='profileImage' src={profile.content !== undefined ? `${config.api.protocol}://${config.api.host}/images/${profile.node_id}/profile/${profile.content.profileImageName}` : ''} />
           <div className='profileDataHeader'>
             <Typography
               sx={{
